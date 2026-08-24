@@ -1,0 +1,13 @@
+schema_version: 1
+id: networking/resolved-search-domain
+version: 1.0.0
+domain: networking
+weight: 10
+estimated_minutes: 7
+requires:
+  - netplan.io
+  - systemd-resolved
+parameters:
+  interface: enp0s5
+  search_domain_1: seed-derived domain (lab<token>.example)
+  search_domain_2: seed-derived domain (corp<token>.example)

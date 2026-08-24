@@ -1,0 +1,15 @@
+schema_version: 1
+id: operations-deployment/logrotate-app
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 7
+requires:
+  - logrotate
+parameters:
+  app_name: seed-derived application name (also the config file name under /etc/logrotate.d)
+  log_path: seed-derived application log file created by setup
+  rotate_count: seed-derived number of rotations to keep (4-9)
+  create_mode: seed-derived octal mode for the recreated log file
+  create_user: owner of the recreated log file
+  create_group: seed-derived group of the recreated log file

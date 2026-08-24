@@ -1,0 +1,10 @@
+# Task: Configure per-user resource limits
+
+The user account `{{username}}` already exists on this system.
+
+Create the file `{{limits_file}}` so that `{{username}}` has the following limits on the number of open files (`nofile`):
+
+- Soft limit: `{{soft_nofile}}`
+- Hard limit: `{{hard_nofile}}`
+
+The limits must apply only to `{{username}}`, must use valid limits.conf syntax, and must persist across reboots.

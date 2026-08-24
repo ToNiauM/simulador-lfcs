@@ -20,20 +20,20 @@ mount_point = p["mount_point"]
 expected_size = int(p["lv_size_mib"])
 fs = p["filesystem"]
 actual_vg = run("pvs", "--noheadings", "-o", "vg_name", disk)
-c1 = criterion("pv_in_vg", actual_vg == vg, 2, "disco pertence ao VG solicitado", actual_vg or "PV/VG ausente")
+c1 = criterion("pv_in_vg", actual_vg == vg, 2, "disk belongs to the requested VG", actual_vg or "PV/VG missing")
 lv_path = run("lvs", "--noheadings", "-o", "lv_path", f"{vg}/{lv}")
-c2 = criterion("lv_exists", bool(lv_path), 2, "logical volume solicitado existe", lv_path or "LV ausente")
+c2 = criterion("lv_exists", bool(lv_path), 2, "requested logical volume exists", lv_path or "LV missing")
 size_text = run("lvs", "--units", "m", "--nosuffix", "--noheadings", "-o", "lv_size", f"{vg}/{lv}") if lv_path else ""
 try:
     actual_size = float(size_text)
 except ValueError:
     actual_size = 0
-c3 = criterion("lv_size", expected_size <= actual_size < expected_size + 5, 2, "tamanho do LV corresponde ao solicitado", size_text or "indisponível")
+c3 = criterion("lv_size", expected_size <= actual_size < expected_size + 5, 2, "LV size matches the requested size", size_text or "unavailable")
 active_source = run("findmnt", "-no", "SOURCE", "--target", mount_point)
 active_fs = run("findmnt", "-no", "FSTYPE", "--target", mount_point)
-c4 = criterion("mounted_filesystem", bool(active_source) and active_fs == fs, 2, "filesystem está montado no destino", f"{active_source or 'não montado'} ({active_fs or '-'})")
+c4 = criterion("mounted_filesystem", bool(active_source) and active_fs == fs, 2, "filesystem is mounted at the target", f"{active_source or 'not mounted'} ({active_fs or '-'})")
 persistent = False
-evidence = "entrada correspondente ausente"
+evidence = "no matching entry"
 if lv_path and os.path.exists("/etc/fstab"):
     lv_real = os.path.realpath(lv_path)
     uuid = run("blkid", "-s", "UUID", "-o", "value", lv_path)
@@ -47,7 +47,7 @@ if lv_path and os.path.exists("/etc/fstab"):
             persistent = True
             evidence = line.strip()
             break
-c5 = criterion("persistent_fstab", persistent, 2, "fstab restaura a montagem", evidence)
+c5 = criterion("persistent_fstab", persistent, 2, "fstab restores the mount", evidence)
 criteria = [c1, c2, c3, c4, c5]
 score = sum(item["points"] for item in criteria)
 print(json.dumps({"schema_version": 1, "task_id": payload["task_id"], "result": "pass" if score == 10 else "fail", "score": score, "max_score": 10, "criteria": criteria}, separators=(",", ":")))

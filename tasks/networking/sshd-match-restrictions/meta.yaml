@@ -1,0 +1,11 @@
+schema_version: 1
+id: networking/sshd-match-restrictions
+version: 1.0.0
+domain: networking
+weight: 10
+estimated_minutes: 7
+requires:
+  - openssh-server
+parameters:
+  restricted_user: seed-derived username (base name + hex suffix)
+  forced_command: [/usr/bin/uptime, /usr/bin/id, /bin/date, /usr/bin/who]

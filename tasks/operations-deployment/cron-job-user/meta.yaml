@@ -1,0 +1,13 @@
+schema_version: 1
+id: operations-deployment/cron-job-user
+version: 1.0.0
+domain: operations-deployment
+weight: 5
+estimated_minutes: 5
+requires:
+  - cron
+parameters:
+  username: seed-derived user created by setup
+  script_path: seed-derived path of the report script provided by setup
+  minute: seed-derived minute of the schedule (0-59)
+  hour: seed-derived hour of the schedule (0-23)

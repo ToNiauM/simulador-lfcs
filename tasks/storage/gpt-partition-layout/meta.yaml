@@ -1,0 +1,12 @@
+schema_version: 1
+id: storage/gpt-partition-layout
+version: 1.0.0
+domain: storage
+weight: 10
+estimated_minutes: 5
+requires:
+  - util-linux
+parameters:
+  target_disk: /dev/vdb
+  part1_size_mib: [100, 128, 160]
+  part2_size_mib: [192, 224, 256]

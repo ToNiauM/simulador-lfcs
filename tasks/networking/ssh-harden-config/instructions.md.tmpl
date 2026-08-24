@@ -1,0 +1,8 @@
+# Networking task
+
+Task: Harden the OpenSSH server daemon configuration as follows:
+
+1. Set `PermitRootLogin` to `{{permit_root_login}}`.
+2. Disable password authentication only for the local user `{{match_user}}` (the account already exists), using a `Match User` block. Password authentication for other users must not be changed by that block.
+
+The configuration must be in effect for the daemon, must be syntactically valid, and must persist across reboots.

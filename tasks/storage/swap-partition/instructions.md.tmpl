@@ -1,0 +1,7 @@
+# Storage Task
+
+Task: Create a GPT partition table on `{{target_disk}}` with a single partition of `{{swap_size_mib}} MiB` and initialize it as swap space.
+
+Activate the new swap area with priority `{{swap_priority}}`.
+
+The swap area must be active with the same priority after a reboot. Do not touch any pre-existing swap or any other disk.

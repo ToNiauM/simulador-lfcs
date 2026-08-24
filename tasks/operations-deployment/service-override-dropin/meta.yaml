@@ -1,0 +1,14 @@
+schema_version: 1
+id: operations-deployment/service-override-dropin
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 6
+requires:
+  - systemd
+parameters:
+  service_name: seed-derived service created by setup
+  script_path: seed-derived path of the agent script provided by setup
+  restart_policy: restart policy the override must configure
+  env_name: environment variable name the override must add
+  env_value: seed-derived environment variable value

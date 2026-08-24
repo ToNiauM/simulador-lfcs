@@ -1,0 +1,7 @@
+# Storage Task
+
+Task: Create a GPT partition table on `{{target_disk}}` with a single partition of `{{part_size_mib}} MiB`.
+
+Format the partition with the `{{filesystem}}` filesystem using the filesystem label `{{fs_label}}` and mount it at `{{mount_point}}`.
+
+The mount must persist across reboots, and the `/etc/fstab` entry must identify the filesystem by its label (`LABEL=`). Do not modify any other disk.

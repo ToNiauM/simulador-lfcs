@@ -1,0 +1,5 @@
+# Networking task
+
+Task: The interface `{{lab_nic}}` is already configured with the static address `{{lab_ip}}/{{prefix_len}}` via netplan. Configure custom DNS resolvers for this interface using netplan: the nameservers `{{dns_server_1}}` and `{{dns_server_2}}`, and the search domain `{{search_domain}}`. Put your configuration in the file `{{netplan_file}}`. The resolvers must be active for the interface now and must persist across reboots.
+
+Do not modify the configuration of the primary network interface or the default route, and do not edit any pre-existing netplan file.

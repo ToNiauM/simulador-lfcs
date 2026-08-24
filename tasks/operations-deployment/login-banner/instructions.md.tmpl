@@ -1,0 +1,15 @@
+# Task: Login banners
+
+Configure a pre-login banner for SSH connections. The banner text below must be stored in `{{banner_file}}`, and the SSH daemon must be configured to display that file to users before authentication:
+
+```
+{{banner_text}}
+```
+
+Additionally, configure the following message of the day, shown after login, in `/etc/motd`:
+
+```
+{{motd_text}}
+```
+
+The SSH daemon configuration must remain valid, and all changes must persist across reboots.

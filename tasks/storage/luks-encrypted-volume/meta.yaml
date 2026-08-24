@@ -1,0 +1,17 @@
+schema_version: 1
+id: storage/luks-encrypted-volume
+version: 1.0.0
+domain: storage
+weight: 20
+estimated_minutes: 15
+requires:
+  - cryptsetup
+  - util-linux
+  - e2fsprogs
+parameters:
+  target_disk: /dev/vdb
+  filesystem: ext4
+  part_size_mib: 256
+  mapper_name: seed-derived device-mapper name
+  key_file: seed-derived path under /root
+  mount_point: seed-derived directory under /srv

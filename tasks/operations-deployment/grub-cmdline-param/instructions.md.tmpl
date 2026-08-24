@@ -1,0 +1,5 @@
+# Task: Add a kernel boot parameter
+
+Add the kernel boot parameter `{{cmdline_param}}` to the `GRUB_CMDLINE_LINUX` variable in `/etc/default/grub`, keeping any parameters already present.
+
+Regenerate the GRUB configuration so the change takes effect, and reboot the system so the running kernel is booted with this parameter. The parameter must be present on the kernel command line of the running system and must persist across future reboots.

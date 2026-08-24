@@ -1,0 +1,10 @@
+schema_version: 1
+id: operations-deployment/journald-persistent
+version: 1.0.0
+domain: operations-deployment
+weight: 5
+estimated_minutes: 5
+requires:
+  - systemd
+parameters:
+  dropin_file: seed-derived journald drop-in file under /etc/systemd/journald.conf.d

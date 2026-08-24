@@ -1,0 +1,13 @@
+# Essential Commands
+
+Task: The file `{{work_dir}}/{{data_file}}` contains measurement samples, one per line, in the form `category value` (a category name, one space, an integer value).
+
+Generate the aggregated report `{{work_dir}}/{{report_file}}` with one line per category, in the form:
+
+```
+category total average
+```
+
+where `total` is the sum of all values of that category (as an integer) and `average` is their arithmetic mean formatted with exactly two decimal places. Fields are separated by a single space. The lines must be sorted alphabetically by category name.
+
+Do not modify `{{data_file}}`.

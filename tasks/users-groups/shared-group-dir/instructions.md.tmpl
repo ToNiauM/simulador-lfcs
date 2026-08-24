@@ -1,0 +1,11 @@
+# Task: Set up a collaboration group and shared directory
+
+The user accounts `{{user_one}}` and `{{user_two}}` already exist on this system.
+
+1. Create the group `{{group_name}}`.
+2. Make `{{user_one}}` and `{{user_two}}` supplementary members of `{{group_name}}` without changing their primary groups.
+3. Create the directory `{{shared_dir}}` configured so that:
+   - Its group is `{{group_name}}`.
+   - Members of `{{group_name}}` can create, modify and delete files in it.
+   - Files and directories created inside it are automatically group-owned by `{{group_name}}`.
+   - Users outside `{{group_name}}` (other than root) have no write access to it.

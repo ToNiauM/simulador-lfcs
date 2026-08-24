@@ -1,0 +1,7 @@
+# Task: Make the system journal persistent
+
+The system journal is currently stored only in volatile memory and is lost on every reboot.
+
+Configure systemd-journald to store its journal persistently on disk. Create the drop-in configuration file `{{dropin_file}}` that sets the journal storage mode to persistent, and make sure the persistent journal directory `/var/log/journal` exists and is in use by journald.
+
+The configuration must persist across reboots.

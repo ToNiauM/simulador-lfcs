@@ -1,0 +1,12 @@
+schema_version: 1
+id: users-groups/useradd-defaults
+version: 1.0.0
+domain: users-groups
+weight: 10
+estimated_minutes: 6
+requires:
+  - passwd
+parameters:
+  default_shell: one of /bin/bash, /bin/dash, /bin/rbash
+  base_dir: base directory for new home directories, derived from seed
+  username: user to create after changing the defaults

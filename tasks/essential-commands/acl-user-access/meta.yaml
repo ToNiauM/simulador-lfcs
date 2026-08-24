@@ -1,0 +1,15 @@
+schema_version: 1
+id: essential-commands/acl-user-access
+version: 1.0.0
+domain: essential-commands
+weight: 15
+estimated_minutes: 8
+requires:
+  - acl
+  - coreutils
+  - passwd
+parameters:
+  acl_user: aud<token>
+  data_dir: /srv/registros-<token>
+  dir_base_mode: "750"
+  file_names: [relatorio-a.txt, relatorio-b.txt]

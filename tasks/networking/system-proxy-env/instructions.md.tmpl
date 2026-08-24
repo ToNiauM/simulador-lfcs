@@ -1,0 +1,11 @@
+# Networking Task
+
+Task: Configure a system-wide HTTP proxy through environment variables.
+
+In `/etc/environment`, define:
+
+- `http_proxy` set to `http://{{proxy_host}}:{{proxy_port}}`
+- `https_proxy` set to `http://{{proxy_host}}:{{proxy_port}}`
+- `no_proxy` containing the entries `{{no_proxy}}`
+
+The settings must apply to new login sessions and must persist across reboots. Do not remove existing entries from the file.

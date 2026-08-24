@@ -1,0 +1,12 @@
+# Task: Configure log rotation for an application
+
+The application `{{app_name}}` writes its log to `{{log_path}}`.
+
+Create the logrotate configuration file `/etc/logrotate.d/{{app_name}}` so that this log file is:
+
+- rotated weekly;
+- kept for {{rotate_count}} rotations;
+- compressed after rotation;
+- recreated after each rotation with mode `{{create_mode}}`, owned by user `{{create_user}}` and group `{{create_group}}`.
+
+The configuration must be accepted by logrotate without errors.

@@ -1,0 +1,14 @@
+schema_version: 1
+id: users-groups/limits-user-resources
+version: 1.0.0
+domain: users-groups
+weight: 10
+estimated_minutes: 5
+requires:
+  - libpam-modules
+  - passwd
+parameters:
+  username: pre-existing user created by setup
+  limits_file: file under /etc/security/limits.d derived from seed
+  soft_nofile: one of 4096, 8192, 10240
+  hard_nofile: one of 16384, 32768, 65536

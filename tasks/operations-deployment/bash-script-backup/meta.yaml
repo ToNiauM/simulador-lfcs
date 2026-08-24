@@ -1,0 +1,13 @@
+schema_version: 1
+id: operations-deployment/bash-script-backup
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 10
+requires:
+  - bash
+  - tar
+parameters:
+  script_path: /usr/local/bin/backup-<token>
+  archive_prefix: bkp<hex>
+  source_dir: /opt/lfcs-data-<token>

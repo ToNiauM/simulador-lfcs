@@ -1,0 +1,10 @@
+schema_version: 1
+id: operations-deployment/grub-cmdline-param
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 6
+requires:
+  - grub2-common
+parameters:
+  cmdline_param: lfcs_lab=<seed8>

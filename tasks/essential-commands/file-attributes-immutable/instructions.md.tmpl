@@ -1,0 +1,9 @@
+# Essential Commands
+
+Task: The directory `{{work_dir}}` contains the files `{{immutable_file}}` and `{{append_file}}`.
+
+Protect `{{work_dir}}/{{immutable_file}}` with the filesystem attribute that makes it immutable, so that not even root can modify, delete or rename it until the attribute is removed.
+
+Protect `{{work_dir}}/{{append_file}}` with the filesystem attribute that makes it append-only, so that existing data can no longer be modified or truncated and the file can only grow.
+
+Do not change the current content of either file. Both attributes must persist across reboots.

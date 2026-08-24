@@ -1,0 +1,12 @@
+# Networking Task
+
+Task: Produce an inventory of all TCP ports currently in the LISTEN state on this system (IPv4 and IPv6 combined) and save it to the file `{{report_path}}`.
+
+The report format is mandatory:
+
+- One port number per line, nothing else on the line.
+- Ports sorted in ascending numeric order.
+- No duplicate lines (a port listening on both IPv4 and IPv6 appears once).
+- Every TCP port in the LISTEN state at the time of the report must be included, and no port that is not listening may appear.
+
+Note: the services `{{svc_a}}` (port `{{port_a}}`) and `{{svc_b}}` (port `{{port_b}}`) are running on this system and must appear in the report. Do not stop or modify them.

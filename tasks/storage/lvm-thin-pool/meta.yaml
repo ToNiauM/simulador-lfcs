@@ -1,0 +1,14 @@
+schema_version: 1
+id: storage/lvm-thin-pool
+version: 1.0.0
+domain: storage
+weight: 15
+estimated_minutes: 8
+requires:
+  - lvm2
+  - thin-provisioning-tools
+  - util-linux
+parameters:
+  target_disk: /dev/vdb
+  pool_size_mib: [192, 256]
+  thin_virtual_size_mib: [384, 512, 640]

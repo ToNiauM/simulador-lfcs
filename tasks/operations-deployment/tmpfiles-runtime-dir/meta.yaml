@@ -1,0 +1,13 @@
+schema_version: 1
+id: operations-deployment/tmpfiles-runtime-dir
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 7
+requires:
+  - systemd
+parameters:
+  runtime_dir: /run/<name>
+  dir_owner: svc-<token>
+  dir_group: svc-<token>
+  dir_mode: ["0750", "0770", "0700"]

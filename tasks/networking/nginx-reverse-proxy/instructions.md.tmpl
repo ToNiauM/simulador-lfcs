@@ -1,0 +1,9 @@
+# Networking Task
+
+Task: A backend web application is already running on this system as the systemd service `{{backend_service}}`, listening only on `127.0.0.1:{{backend_port}}` and serving content from `{{backend_dir}}` (its response contains the verification token `{{content_token}}`). Configure `nginx` as a reverse proxy in front of this backend.
+
+- nginx must listen on port `{{public_port}}` and forward all HTTP requests to the backend at `127.0.0.1:{{backend_port}}`.
+- Requests to `http://127.0.0.1:{{public_port}}/` must return the backend content.
+- The `nginx` service must be running and must start automatically at boot.
+- Do not modify, stop, or reconfigure the `{{backend_service}}` service and do not change the content of `{{backend_dir}}`.
+- The configuration must persist across reboots.

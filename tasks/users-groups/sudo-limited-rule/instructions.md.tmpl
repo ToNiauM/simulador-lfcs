@@ -1,0 +1,11 @@
+# Task: Grant limited sudo privileges
+
+The user account `{{username}}` already exists on this system.
+
+Create the file `{{sudoers_file}}` so that `{{username}}` is allowed to run only the command `{{allowed_command}}` as root, without being asked for a password.
+
+Requirements:
+
+- The rule must grant no command other than `{{allowed_command}}`.
+- The sudoers configuration as a whole must remain syntactically valid.
+- The new file must have permissions accepted by sudo.

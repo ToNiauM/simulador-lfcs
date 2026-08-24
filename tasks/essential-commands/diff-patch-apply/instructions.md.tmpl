@@ -1,0 +1,7 @@
+# Essential Commands
+
+Task: The directory `{{work_dir}}` contains a small file tree, and the file `{{patch_file}}` is a unified-format patch prepared for it. The paths inside the patch carry one leading directory component (`a/` and `b/`).
+
+Apply `{{patch_file}}` to the tree rooted at `{{work_dir}}` so that every hunk is applied cleanly.
+
+When you are done, the patched files must contain exactly the post-patch content, the file `{{keep_name}}` (not mentioned by the patch) must be unchanged, and no reject (`*.rej`) or backup (`*.orig`) files may remain inside `{{work_dir}}`. Do not delete `{{patch_file}}`.

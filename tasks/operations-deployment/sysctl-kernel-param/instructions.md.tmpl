@@ -1,0 +1,8 @@
+# Task: Tune kernel parameters
+
+Set the following kernel runtime parameters on this system:
+
+- `vm.swappiness` = `{{swappiness}}`
+- `kernel.pid_max` = `{{pid_max}}`
+
+Both values must be in effect immediately and must persist across reboots. Store the persistent configuration in the file `{{conf_file}}`.

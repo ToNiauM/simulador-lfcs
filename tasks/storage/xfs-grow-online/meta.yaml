@@ -1,0 +1,15 @@
+schema_version: 1
+id: storage/xfs-grow-online
+version: 1.0.0
+domain: storage
+weight: 10
+estimated_minutes: 8
+requires:
+  - lvm2
+  - xfsprogs
+  - util-linux
+parameters:
+  target_disk: /dev/vdb
+  filesystem: xfs
+  initial_size_mib: [320, 352]
+  target_size_mib: initial_size_mib + 256

@@ -1,0 +1,14 @@
+schema_version: 1
+id: storage/loop-device-image
+version: 1.0.0
+domain: storage
+weight: 10
+estimated_minutes: 8
+requires:
+  - util-linux
+  - e2fsprogs
+parameters:
+  image_path: seed-derived path under /var/lib
+  size_mib: [64, 96, 128]
+  filesystem: ext4
+  mount_point: seed-derived directory under /srv

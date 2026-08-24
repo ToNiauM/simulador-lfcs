@@ -1,0 +1,14 @@
+schema_version: 1
+id: essential-commands/cut-fields-report
+version: 1.0.0
+domain: essential-commands
+weight: 5
+estimated_minutes: 4
+requires:
+  - coreutils
+parameters:
+  work_dir: /srv/relatorios-<token>
+  source_file: vendas-<token>.csv
+  output_file: campos-<token>.txt
+  delimiter: [";", ",", ":"]
+  fields: ["1,3", "2,4", "1,4", "2,3"]

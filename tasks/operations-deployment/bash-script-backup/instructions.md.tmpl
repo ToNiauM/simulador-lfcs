@@ -1,0 +1,12 @@
+# Task: Backup script
+
+Write an executable bash script at `{{script_path}}` that creates a compressed backup of a directory.
+
+The script takes exactly two arguments:
+
+1. the path of the source directory
+2. the path of an existing destination directory
+
+The script must create a gzip-compressed tar archive inside the destination directory, named `{{archive_prefix}}-<NAME>.tar.gz`, where `<NAME>` is the base name of the source directory (for example, for the source `/opt/data`, the archive is named `{{archive_prefix}}-data.tar.gz`). The archive must contain all files of the source directory with their contents intact, and the script must exit with status code `0` on success.
+
+A sample data directory is available at `{{source_dir}}` for testing.

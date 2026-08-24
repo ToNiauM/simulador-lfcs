@@ -1,0 +1,13 @@
+schema_version: 1
+id: storage/xfs-partition-mount
+version: 1.0.0
+domain: storage
+weight: 15
+estimated_minutes: 8
+requires:
+  - util-linux
+  - xfsprogs
+parameters:
+  target_disk: /dev/vdb
+  filesystem: xfs
+  part_size_mib: [150, 200, 250]

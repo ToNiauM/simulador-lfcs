@@ -1,0 +1,5 @@
+# Networking task
+
+Task: Using nftables, drop all incoming IPv4 traffic whose source address belongs to the network `{{blocked_subnet}}`. The rule must be active in the running ruleset, must be loaded automatically at boot through the nftables service, and its configuration must live in `/etc/nftables.conf` or in a file included from it.
+
+Do not add any rule that blocks or restricts SSH access on port 22 from other networks, and do not change the policy of existing chains to drop.

@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: Create a partition of approximately `{{part_size_mib}}` MiB on `{{target_disk}}` and set it up as a LUKS2 encrypted volume. Create a key file at `{{key_file}}`, readable by root only, and add it as a valid unlock key. Open the volume under the device-mapper name `{{mapper_name}}`, format it with `{{filesystem}}` and mount it at `{{mount_point}}`.
+
+The volume must be unlocked automatically at boot using the key file (via `/etc/crypttab`) and the filesystem must be mounted automatically. The configuration must persist across reboots. Do not touch any other disks.

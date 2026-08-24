@@ -1,0 +1,13 @@
+# Task: Argument-processing script
+
+Write an executable bash script at `{{script_path}}` that behaves exactly as follows:
+
+- If the number of arguments is different from `{{expected_argc}}`, the script must exit with status code `{{error_exit_code}}` (it may print an error message to standard error, but must print nothing to standard output).
+- If called with exactly `{{expected_argc}}` arguments, the script must print the arguments to standard output in reverse order, one per line, each converted to uppercase, and exit with status code `0`.
+
+Example: called with the arguments `one two`, a script expecting 2 arguments prints:
+
+```
+TWO
+ONE
+```

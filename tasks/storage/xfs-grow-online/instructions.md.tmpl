@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: The logical volume `{{lv_name}}` in volume group `{{vg_name}}` (on `{{target_disk}}`) currently has a size of `{{initial_size_mib}}` MiB and is mounted at `{{mount_point}}` with an `{{filesystem}}` filesystem. Extend the logical volume to `{{target_size_mib}}` MiB and grow the filesystem to use the new space.
+
+The filesystem must remain mounted the whole time (online resize) and the mount must remain persistent across reboots. Do not touch any other disks.

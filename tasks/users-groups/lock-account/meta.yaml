@@ -1,0 +1,11 @@
+schema_version: 1
+id: users-groups/lock-account
+version: 1.0.0
+domain: users-groups
+weight: 10
+estimated_minutes: 5
+requires:
+  - passwd
+parameters:
+  username: pre-existing user created by setup
+  expire_date: YYYY-MM-DD in 2027 derived from seed

@@ -1,0 +1,7 @@
+# Storage Task
+
+Task: Create a GPT partition table on `{{target_disk}}` with a single partition of `{{part_size_mib}} MiB`.
+
+Format the partition with the `{{filesystem}}` filesystem and mount it at `{{mount_point}}` using the `{{mount_option}}` mount option.
+
+The mount, including the `{{mount_option}}` option, must persist across reboots. Do not modify any other disk.

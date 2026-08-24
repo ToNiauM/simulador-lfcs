@@ -1,0 +1,7 @@
+# Essential Commands
+
+Task: The application log `{{log_file}}` mixes messages of several severity levels. Each line starts with a severity field followed by a space.
+
+Extract every line of `{{log_file}}` that begins with the field `{{level}}` (the level name at the very start of the line, followed by a space) and write those lines, unmodified and in their original order, to the file `{{out_file}}`.
+
+The output file must contain only the matching lines. Do not modify `{{log_file}}`.

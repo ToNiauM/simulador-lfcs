@@ -1,0 +1,17 @@
+schema_version: 1
+id: storage/ext4-quota-user
+version: 1.0.0
+domain: storage
+weight: 15
+estimated_minutes: 12
+requires:
+  - quota
+  - util-linux
+  - e2fsprogs
+parameters:
+  target_disk: /dev/vdb
+  filesystem: ext4
+  part_size_mib: 300
+  username: seed-derived user (created by setup)
+  block_hard_kib: [20480, 30720, 40960, 51200]
+  mount_point: seed-derived directory under /srv

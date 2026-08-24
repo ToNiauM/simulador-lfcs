@@ -1,0 +1,15 @@
+schema_version: 1
+id: networking/dns-resolver-custom
+version: 1.0.0
+domain: networking
+weight: 10
+estimated_minutes: 6
+requires:
+  - netplan.io
+  - systemd-resolved
+  - iproute2
+parameters:
+  lab_nic: enp0s5
+  dns_servers: two IPv4 addresses from documentation ranges
+  search_domain: lab<token>.example
+  netplan_file: /etc/netplan/92-lfcs-dns-<token>.yaml

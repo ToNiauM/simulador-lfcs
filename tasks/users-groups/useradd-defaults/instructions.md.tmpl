@@ -1,0 +1,9 @@
+# Task: Change the system defaults for new user accounts
+
+1. Change the system-wide defaults used when creating new user accounts so that:
+   - The default login shell is `{{default_shell}}`.
+   - Home directories are created under `{{base_dir}}`.
+
+2. Create the user account `{{username}}` with a home directory, without overriding the defaults on the command line, so that the account demonstrates the new defaults: its login shell must be `{{default_shell}}` and its home directory must be `{{base_dir}}/{{username}}`.
+
+The new defaults must apply to every account created in the future and must persist across reboots.

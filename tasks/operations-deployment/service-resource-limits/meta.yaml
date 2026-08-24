@@ -1,0 +1,13 @@
+schema_version: 1
+id: operations-deployment/service-resource-limits
+version: 1.0.0
+domain: operations-deployment
+weight: 15
+estimated_minutes: 8
+requires:
+  - systemd
+parameters:
+  service_name: worker-<token>
+  memory_max_mib: [128, 192, 256]
+  cpu_quota_pct: [20, 40, 50, 80]
+  tasks_max: [16, 32, 64]

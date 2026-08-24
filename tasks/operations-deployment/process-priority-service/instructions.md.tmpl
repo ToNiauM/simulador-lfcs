@@ -1,0 +1,7 @@
+# Task: Low-priority batch service
+
+The executable script `{{worker_script}}` is installed on the system.
+
+Create a systemd system service named `{{service_name}}.service` that runs this script. The service process must run with a CPU scheduling niceness of `{{nice_value}}` and with the I/O scheduling class `{{io_class}}`, configured through the service unit.
+
+The service must be running now and must start automatically at boot; the configuration must persist across reboots.

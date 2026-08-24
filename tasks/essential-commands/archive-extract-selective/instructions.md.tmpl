@@ -1,0 +1,7 @@
+# Essential Commands
+
+Task: The release archive `{{archive_path}}` (gzip-compressed tar) contains the tree `{{app_name}}/` with several subdirectories (`conf`, `docs`, `bin`, `data`).
+
+Extract ONLY the members under `{{app_name}}/{{wanted_subdir}}/` into the directory `{{dest_dir}}`, preserving the directory structure of the archive: the extracted files must end up under `{{dest_dir}}/{{app_name}}/{{wanted_subdir}}/`.
+
+No other member of the archive may be extracted into `{{dest_dir}}`, and the archive itself must remain in place unmodified. File contents must match the archive exactly.

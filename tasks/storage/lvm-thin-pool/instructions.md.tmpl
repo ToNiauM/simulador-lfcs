@@ -1,0 +1,8 @@
+# Storage Task
+
+Task: The volume group `{{vg_name}}` is available on `{{target_disk}}`.
+
+1. Create a thin pool named `{{pool_name}}` in `{{vg_name}}` with a size of `{{pool_size_mib}} MiB`.
+2. Create a thin-provisioned logical volume named `{{thin_lv_name}}` in that pool with a virtual size of `{{thin_virtual_size_mib}} MiB`.
+
+Do not modify any other disk.

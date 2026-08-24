@@ -1,0 +1,13 @@
+schema_version: 1
+id: operations-deployment/kernel-module-boot
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 6
+requires:
+  - kmod
+parameters:
+  module: kernel module to load (dummy)
+  numdummies: seed-derived value for the numdummies module option (2-5)
+  load_file: seed-derived file under /etc/modules-load.d
+  options_file: seed-derived file under /etc/modprobe.d

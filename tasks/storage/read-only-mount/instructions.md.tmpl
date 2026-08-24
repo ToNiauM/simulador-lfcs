@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: Create a partition of approximately `{{part_size_mib}}` MiB on `{{target_disk}}`, format it with `{{filesystem}}` and mount it read-only at `{{mount_point}}`. No user, including root, may be able to write to files under this mount point through it.
+
+The read-only mount must persist across reboots. Do not touch any other disks.

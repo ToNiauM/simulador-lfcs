@@ -1,0 +1,7 @@
+# Task: Custom systemd target
+
+The system has two services already installed: `{{service_a}}` and `{{service_b}}`.
+
+Create a custom systemd target named `{{target_name}}` that groups these two services: the target must want (`Wants=`) both services and be ordered after (`After=`) both of them.
+
+Additionally, link both services to the target through enablement links in the target's `.wants` directory under `/etc/systemd/system`, so that starting the target starts both services. The configuration must persist across reboots.

@@ -1,0 +1,15 @@
+schema_version: 1
+id: storage/lvm-extend-lv
+version: 1.0.0
+domain: storage
+weight: 15
+estimated_minutes: 8
+requires:
+  - lvm2
+  - util-linux
+  - e2fsprogs
+parameters:
+  target_disk: /dev/vdb
+  filesystem: ext4
+  initial_size_mib: [96, 128]
+  target_size_mib: [256, 320, 384]

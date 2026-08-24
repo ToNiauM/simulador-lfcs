@@ -1,0 +1,15 @@
+schema_version: 1
+id: storage/mdadm-raid1
+version: 1.0.0
+domain: storage
+weight: 20
+estimated_minutes: 15
+requires:
+  - mdadm
+  - util-linux
+  - e2fsprogs
+parameters:
+  target_disk: /dev/vdb
+  filesystem: ext4
+  part_size_mib: 200
+  mount_point: seed-derived directory under /srv

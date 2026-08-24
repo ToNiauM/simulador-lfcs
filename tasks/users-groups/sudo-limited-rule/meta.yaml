@@ -1,0 +1,13 @@
+schema_version: 1
+id: users-groups/sudo-limited-rule
+version: 1.0.0
+domain: users-groups
+weight: 15
+estimated_minutes: 6
+requires:
+  - sudo
+  - passwd
+parameters:
+  username: pre-existing user created by setup
+  allowed_command: one of /usr/bin/df, /usr/bin/du, /usr/bin/free, /usr/bin/uptime
+  sudoers_file: file under /etc/sudoers.d derived from seed

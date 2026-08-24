@@ -1,0 +1,11 @@
+schema_version: 1
+id: storage/fstrim-timer
+version: 1.0.0
+domain: storage
+weight: 5
+estimated_minutes: 5
+requires:
+  - util-linux
+parameters:
+  trim_day: seed-derived day of week (Mon..Sun)
+  trim_time: seed-derived time HH:MM

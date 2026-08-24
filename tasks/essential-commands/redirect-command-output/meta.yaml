@@ -1,0 +1,14 @@
+schema_version: 1
+id: essential-commands/redirect-command-output
+version: 1.0.0
+domain: essential-commands
+weight: 5
+estimated_minutes: 3
+requires:
+  - coreutils
+  - bash
+parameters:
+  program_path: /usr/local/bin/coletor-<token>
+  output_dir: /srv/saidas-<token>
+  stdout_file: saida-<token>.txt
+  stderr_file: erros-<token>.txt

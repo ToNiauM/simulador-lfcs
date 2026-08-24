@@ -1,0 +1,14 @@
+schema_version: 1
+id: storage/read-only-mount
+version: 1.0.0
+domain: storage
+weight: 10
+estimated_minutes: 8
+requires:
+  - util-linux
+  - e2fsprogs
+parameters:
+  target_disk: /dev/vdb
+  filesystem: ext4
+  part_size_mib: 200
+  mount_point: seed-derived directory under /srv

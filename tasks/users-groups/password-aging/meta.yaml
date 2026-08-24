@@ -1,0 +1,13 @@
+schema_version: 1
+id: users-groups/password-aging
+version: 1.0.0
+domain: users-groups
+weight: 10
+estimated_minutes: 5
+requires:
+  - passwd
+parameters:
+  username: pre-existing user created by setup
+  max_days: one of 60, 75, 90
+  min_days: one of 5, 7, 10
+  warn_days: one of 9, 12, 14

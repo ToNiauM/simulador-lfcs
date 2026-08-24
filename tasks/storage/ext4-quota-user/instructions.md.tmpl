@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: Create a partition of approximately `{{part_size_mib}}` MiB on `{{target_disk}}`, format it with `{{filesystem}}` and mount it at `{{mount_point}}` with the `usrquota` mount option. Enable user disk quotas on this filesystem and set a hard block limit of `{{block_hard_kib}}` KiB (no soft limit) for the existing user `{{username}}`.
+
+Quotas must be enforced now and the mount, including the quota option, must persist across reboots. Do not touch any other disks.

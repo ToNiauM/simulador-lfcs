@@ -1,0 +1,17 @@
+# Essential Commands
+
+Task: The directory `{{repo_dir}}` is a Git repository whose default branch is `{{main_branch}}`. A repository-local commit identity is already configured.
+
+Create a branch named `{{feature_branch}}` starting from `{{main_branch}}`. On that branch, create the file `{{feature_file}}` in the root of the repository with exactly this content:
+
+```
+{{feature_content}}
+```
+
+Commit that file on `{{feature_branch}}` with exactly this commit message:
+
+```
+{{feature_commit_message}}
+```
+
+Then merge `{{feature_branch}}` back into `{{main_branch}}`. When you are done, `{{main_branch}}` must contain `{{feature_file}}`, the branch `{{feature_branch}}` must still exist, and `{{main_branch}}` must be the checked-out branch.

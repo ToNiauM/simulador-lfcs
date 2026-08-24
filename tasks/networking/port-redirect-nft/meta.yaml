@@ -1,0 +1,12 @@
+schema_version: 1
+id: networking/port-redirect-nft
+version: 1.0.0
+domain: networking
+weight: 15
+estimated_minutes: 10
+requires:
+  - nftables
+parameters:
+  nft_table: lfcs<seed>
+  src_port: [10000, 14999]
+  dst_port: [15000, 19999]

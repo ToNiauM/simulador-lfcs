@@ -1,0 +1,10 @@
+# Essential Commands
+
+Task: The directory `{{base_dir}}` contains a tree of working files.
+
+Find, under `{{base_dir}}` (including subdirectories), all regular files that meet BOTH of the following conditions:
+
+1. size greater than `{{threshold_kib}}` KiB;
+2. last modified more than `{{age_days}}` days ago.
+
+Write the absolute paths of these files, one per line and in alphabetical order, to the file `{{report_file}}`. The report must not list any file that does not satisfy both conditions.

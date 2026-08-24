@@ -1,0 +1,13 @@
+schema_version: 1
+id: operations-deployment/swap-file-persistent
+version: 1.0.0
+domain: operations-deployment
+weight: 15
+estimated_minutes: 8
+requires:
+  - util-linux
+  - procps
+parameters:
+  swap_file: /swap-lfcs-<token>.img
+  swap_size_mib: [256, 384, 512]
+  swappiness: [15, 25, 35, 45]

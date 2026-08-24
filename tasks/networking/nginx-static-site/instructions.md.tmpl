@@ -1,0 +1,9 @@
+# Networking Task
+
+Task: The directory `{{content_dir}}` already contains a website, including an `index.html` whose verification token `{{content_token}}` must remain reachable. Configure the `nginx` web server to serve exactly that directory over HTTP on port `{{http_port}}`.
+
+- Requests to `http://127.0.0.1:{{http_port}}/` must return the existing `index.html` from `{{content_dir}}`.
+- The site must be enabled in the nginx configuration.
+- The `nginx` service must be running and must start automatically at boot.
+- Do not modify the content of `{{content_dir}}` and do not change the default HTTP/HTTPS ports of any other site.
+- The configuration must persist across reboots.

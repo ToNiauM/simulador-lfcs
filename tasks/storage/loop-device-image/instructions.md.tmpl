@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: Create a disk image file at `{{image_path}}` with a size of exactly `{{size_mib}}` MiB. Format the image with `{{filesystem}}` and mount it at `{{mount_point}}` through a loop device.
+
+The mount must be active now and must persist across reboots (use the `loop` mount option in `/etc/fstab`). Do not modify any disks.

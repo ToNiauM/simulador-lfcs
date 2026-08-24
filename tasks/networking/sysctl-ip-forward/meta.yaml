@@ -1,0 +1,10 @@
+schema_version: 1
+id: networking/sysctl-ip-forward
+version: 1.0.0
+domain: networking
+weight: 5
+estimated_minutes: 4
+requires:
+  - procps
+parameters:
+  sysctl_file: /etc/sysctl.d/<NN>-lfcs-<token>.conf

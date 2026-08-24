@@ -1,0 +1,13 @@
+# Task: Create a service account
+
+A new internal daemon will run on this system under a dedicated service account.
+
+Create the system account `{{username}}` with all of the following attributes:
+
+- UID: `{{uid}}` (a system UID)
+- Primary group: a system group named `{{username}}`
+- Home directory: `{{home_dir}}` (the directory must exist)
+- A shell that prevents interactive login
+- No usable password
+
+The account is for a daemon only; it must never be able to log in interactively.

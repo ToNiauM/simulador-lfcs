@@ -1,0 +1,14 @@
+schema_version: 1
+id: storage/lvm-snapshot
+version: 1.0.0
+domain: storage
+weight: 10
+estimated_minutes: 5
+requires:
+  - lvm2
+  - util-linux
+  - e2fsprogs
+parameters:
+  target_disk: /dev/vdb
+  origin_size_mib: [160, 200]
+  snap_size_mib: [32, 48, 64]

@@ -1,0 +1,15 @@
+schema_version: 1
+id: networking/listening-services-inventory
+version: 1.0.0
+domain: networking
+weight: 10
+estimated_minutes: 8
+requires:
+  - iproute2
+  - python3
+parameters:
+  report_path: /root/listening-ports-<seed>.txt
+  svc_a: lfcs-listen-a-<seed>
+  svc_b: lfcs-listen-b-<seed>
+  port_a: [20000, 21999]
+  port_b: [22001, 23999]

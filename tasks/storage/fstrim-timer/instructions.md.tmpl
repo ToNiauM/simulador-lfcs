@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: Ensure periodic TRIM of mounted filesystems is performed by systemd: the `fstrim.timer` unit must be enabled and active, and it must start automatically at boot.
+
+In addition, change its schedule so that it runs weekly on `{{trim_day}}` at `{{trim_time}}`, replacing the default schedule. Use a systemd drop-in; do not edit files shipped by the distribution.

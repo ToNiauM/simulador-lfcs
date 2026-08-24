@@ -1,0 +1,13 @@
+schema_version: 1
+id: networking/nginx-static-site
+version: 1.0.0
+domain: networking
+weight: 15
+estimated_minutes: 8
+requires:
+  - nginx
+  - curl
+parameters:
+  content_dir: /srv/www/site-<seed>
+  http_port: [8081, 9880]
+  content_token: <seed-derived hex token embedded in index.html>

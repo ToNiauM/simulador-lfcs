@@ -1,0 +1,10 @@
+# Networking Task
+
+Task: Restrict SSH access for the existing user `{{restricted_user}}`.
+
+Configure the OpenSSH daemon so that, for the user `{{restricted_user}}` only:
+
+- every SSH session is forced to run the command `{{forced_command}}` (ForceCommand);
+- TCP forwarding is disabled.
+
+All other accounts must keep the default SSH behavior. The SSH service must remain running with a valid configuration, and the restrictions must persist across reboots.

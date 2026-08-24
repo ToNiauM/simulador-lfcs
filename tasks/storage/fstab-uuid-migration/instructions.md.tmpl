@@ -1,0 +1,7 @@
+# Storage Task
+
+Task: The partition `{{target_disk}}1` is formatted with `{{filesystem}}` and mounted at `{{mount_point}}` through an `/etc/fstab` entry that references the device path.
+
+Migrate that entry so the filesystem is identified by its UUID (`UUID=...`). No device-path-based entry for this mount point may remain in `/etc/fstab`.
+
+The filesystem must stay mounted and the configuration must persist across reboots. Do not modify any other disk.

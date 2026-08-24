@@ -1,0 +1,10 @@
+# Networking Task
+
+Task: Create a network bridge named `{{bridge_name}}` that uses a dummy interface named `{{dummy_if}}` as its only port.
+
+- The bridge `{{bridge_name}}` must exist, be up, and have the address `{{bridge_ip}}` configured.
+- The dummy interface `{{dummy_if}}` must exist and be enslaved to `{{bridge_name}}`.
+- The `dummy` kernel module must be loaded automatically at boot through a file in `/etc/modules-load.d/`.
+- Make the bridge and its port persistent using netplan or systemd-networkd, in new dedicated configuration files; do not overwrite or delete any existing network configuration files.
+- Do not modify any physical network interface or the system default route.
+- The configuration must persist across reboots.

@@ -1,0 +1,13 @@
+schema_version: 1
+id: storage/bind-mount-persistent
+version: 1.0.0
+domain: storage
+weight: 5
+estimated_minutes: 5
+requires:
+  - util-linux
+parameters:
+  source_dir: seed-derived directory under /srv (created by setup)
+  bind_target: seed-derived directory under /mnt
+  sentinel_file: dados.txt
+  sentinel_content: seed-derived hex token

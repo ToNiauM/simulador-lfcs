@@ -1,0 +1,9 @@
+# Networking Task
+
+Task: Using nftables, redirect incoming TCP traffic arriving on port `{{src_port}}` to the local port `{{dst_port}}`.
+
+- Create an nftables table named `{{nft_table}}` (family `ip` or `inet`).
+- Inside that table, create a chain of type `nat` hooked to `prerouting` containing a rule that redirects TCP destination port `{{src_port}}` to port `{{dst_port}}`.
+- The rule must be active in the running ruleset.
+- The configuration must persist across reboots.
+- Do not remove or modify any other firewall rules on the system.

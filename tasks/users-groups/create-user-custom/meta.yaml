@@ -1,0 +1,14 @@
+schema_version: 1
+id: users-groups/create-user-custom
+version: 1.0.0
+domain: users-groups
+weight: 5
+estimated_minutes: 4
+requires:
+  - passwd
+parameters:
+  username: derived from seed
+  uid: integer in 2000-2799 derived from seed
+  home_dir: /home/<derived>
+  shell: one of /bin/bash, /bin/sh, /bin/dash
+  comment: GECOS string derived from seed

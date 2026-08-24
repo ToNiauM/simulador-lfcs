@@ -1,0 +1,11 @@
+# Task: Service resource limits
+
+The systemd service `{{service_name}}.service` is installed and running on the system. Do not modify its original unit file.
+
+Limit the resources of this service as follows:
+
+- maximum memory usage: `{{memory_max_mib}} MiB` (MemoryMax)
+- CPU quota: `{{cpu_quota_pct}}%` (CPUQuota)
+- maximum number of tasks: `{{tasks_max}}` (TasksMax)
+
+The limits must be in effect for the running service and must persist across reboots. The service must remain enabled and running.

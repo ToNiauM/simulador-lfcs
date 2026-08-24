@@ -1,0 +1,15 @@
+schema_version: 1
+id: operations-deployment/rsyslog-custom-facility
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 7
+requires:
+  - rsyslog
+  - systemd
+  - bsdutils
+parameters:
+  facility: [local2, local3, local4, local5, local6]
+  conf_file: /etc/rsyslog.d/55-<seed6>.conf
+  log_file: /var/log/lab-<seed6>.log
+  test_token: LFCS-<seed8>

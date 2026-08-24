@@ -1,0 +1,11 @@
+# Networking Task
+
+Task: Tune kernel network parameters on this server.
+
+Set the following kernel parameters:
+
+- `net.ipv4.tcp_syncookies` = `{{tcp_syncookies}}`
+- `net.core.somaxconn` = `{{somaxconn}}`
+- `net.ipv4.tcp_fin_timeout` = `{{tcp_fin_timeout}}`
+
+The values must be active on the running system and must persist across reboots via a configuration file in `/etc/sysctl.d/`.

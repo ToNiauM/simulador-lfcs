@@ -1,0 +1,13 @@
+schema_version: 1
+id: essential-commands/file-ownership-tree
+version: 1.0.0
+domain: essential-commands
+weight: 10
+estimated_minutes: 5
+requires:
+  - coreutils
+  - passwd
+parameters:
+  tree_dir: /srv/projeto-<token>
+  owner_user: svc<token>
+  owner_group: equipe<token>

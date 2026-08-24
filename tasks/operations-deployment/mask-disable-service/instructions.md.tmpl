@@ -1,0 +1,8 @@
+# Task: Retire unneeded services
+
+Two services are currently enabled and running on this server: `{{service_mask}}` and `{{service_disable}}`.
+
+1. Stop `{{service_mask}}` and mask it so that it can never be started, manually or automatically.
+2. Stop `{{service_disable}}` and disable it so that it no longer starts at boot. Do not mask it: it must remain loadable and manually startable.
+
+The resulting state must persist across reboots.

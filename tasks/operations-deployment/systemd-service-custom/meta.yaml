@@ -1,0 +1,11 @@
+schema_version: 1
+id: operations-deployment/systemd-service-custom
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 6
+requires:
+  - systemd
+parameters:
+  service_name: seed-derived systemd service unit name
+  script_path: seed-derived path of the worker script provided by setup

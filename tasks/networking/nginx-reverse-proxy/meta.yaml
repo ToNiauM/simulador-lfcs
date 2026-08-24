@@ -1,0 +1,16 @@
+schema_version: 1
+id: networking/nginx-reverse-proxy
+version: 1.0.0
+domain: networking
+weight: 15
+estimated_minutes: 10
+requires:
+  - nginx
+  - curl
+  - python3
+parameters:
+  backend_service: lfcs-backend-<seed>
+  backend_dir: /srv/lfcs-backend-<seed>
+  backend_port: [9901, 11900]
+  public_port: [8081, 9880]
+  content_token: <seed-derived hex token served by the backend>

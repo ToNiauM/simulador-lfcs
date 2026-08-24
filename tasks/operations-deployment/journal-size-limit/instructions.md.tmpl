@@ -1,0 +1,7 @@
+# Task: Limit journal disk usage
+
+Persistent journal growth must be capped on this server.
+
+Create a systemd-journald drop-in configuration file at `{{dropin_file}}` that limits the journal to a maximum disk usage of `{{system_max_use}}` (`SystemMaxUse`) and a maximum log retention of `{{max_retention_sec}}` (`MaxRetentionSec`).
+
+Apply the configuration to the running journald service. The configuration must persist across reboots. Do not edit `/etc/systemd/journald.conf` itself.

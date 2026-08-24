@@ -1,0 +1,14 @@
+schema_version: 1
+id: essential-commands/git-branch-merge
+version: 1.0.0
+domain: essential-commands
+weight: 15
+estimated_minutes: 8
+requires:
+  - git
+parameters:
+  repo_dir: /srv/codigo-<token>
+  main_branch: main
+  feature_branch: feature-<token>
+  feature_file: modulo-<token>.txt
+  feature_commit_message: derived from seed

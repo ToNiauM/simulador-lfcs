@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: Create a partition of approximately `{{part_size_mib}}` MiB on `{{target_disk}}` and format it with `{{filesystem}}`. Configure on-demand mounting at `{{mount_point}}`: the filesystem must not be mounted at boot, but must be mounted automatically by systemd as soon as the directory is accessed.
+
+The configuration must persist across reboots. Do not touch any other disks.

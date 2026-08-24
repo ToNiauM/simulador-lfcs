@@ -1,0 +1,7 @@
+# Task: Schedule a maintenance job with a systemd timer
+
+A maintenance script has been installed at `{{script_path}}`.
+
+Create a systemd service unit named `{{timer_name}}.service` that runs this script once per invocation, and a systemd timer unit named `{{timer_name}}.timer` that triggers the service on the calendar schedule `{{on_calendar}}`.
+
+The timer must be active now and must start automatically at every boot. The configuration must persist across reboots.

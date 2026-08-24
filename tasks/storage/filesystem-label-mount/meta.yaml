@@ -1,0 +1,14 @@
+schema_version: 1
+id: storage/filesystem-label-mount
+version: 1.0.0
+domain: storage
+weight: 15
+estimated_minutes: 8
+requires:
+  - util-linux
+  - e2fsprogs
+parameters:
+  target_disk: /dev/vdb
+  filesystem: ext4
+  part_size_mib: [150, 200, 250]
+  fs_label: DATA + 6 hex chars derived from seed

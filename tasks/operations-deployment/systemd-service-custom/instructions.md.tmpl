@@ -1,0 +1,11 @@
+# Task: Create a systemd service
+
+A worker script has been installed at `{{script_path}}`.
+
+Create a systemd service unit named `{{service_name}}.service` that runs this script. The unit must:
+
+- execute `{{script_path}}` as its main process;
+- be restarted automatically only when it exits with a failure;
+- be wanted by `multi-user.target`.
+
+The service must be running now and must start automatically at every boot. The configuration must persist across reboots.

@@ -1,0 +1,13 @@
+schema_version: 1
+id: essential-commands/grep-extract-pattern
+version: 1.0.0
+domain: essential-commands
+weight: 5
+estimated_minutes: 5
+requires:
+  - grep
+  - coreutils
+parameters:
+  log_file: /var/log/app-<token>.log
+  out_file: /root/filtrado-<token>.txt
+  level: [ERROR, WARN, CRIT]

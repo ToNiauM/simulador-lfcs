@@ -1,0 +1,8 @@
+# Task: Disable core dumps
+
+Security policy requires core dumps to be disabled on this server.
+
+1. Create the file `{{limits_file}}` with a rule that sets a hard core file size limit of `0` for all users (`*`).
+2. Create the file `{{sysctl_file}}` setting the kernel parameter `{{sysctl_key}}` to `{{sysctl_value}}`, and make that value active on the running system.
+
+Both settings must persist across reboots. Do not modify any other files under `/etc/security/limits.d` or `/etc/sysctl.d`.

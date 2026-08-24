@@ -1,0 +1,13 @@
+schema_version: 1
+id: essential-commands/compress-multiple-formats
+version: 1.0.0
+domain: essential-commands
+weight: 5
+estimated_minutes: 4
+requires:
+  - gzip
+  - xz-utils
+parameters:
+  work_dir: /srv/arquivos-<token>
+  gzip_file: diario-<token>.log
+  xz_file: auditoria-<token>.log

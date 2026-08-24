@@ -1,0 +1,12 @@
+schema_version: 1
+id: operations-deployment/login-banner
+version: 1.0.0
+domain: operations-deployment
+weight: 5
+estimated_minutes: 5
+requires:
+  - openssh-server
+parameters:
+  banner_file: /etc/issue.net
+  banner_text: AUTHORIZED ACCESS ONLY - REF <TOKEN>
+  motd_text: Managed system - change ref <hex>

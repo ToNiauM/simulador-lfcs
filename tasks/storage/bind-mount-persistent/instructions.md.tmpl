@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: The directory `{{source_dir}}` holds application data (including the file `{{sentinel_file}}`). Make the exact same content available at `{{bind_target}}` as well, using a bind mount, so that changes on either side are immediately visible on the other. Do not copy the data.
+
+The bind mount must persist across reboots. Do not modify any disks.

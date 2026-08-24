@@ -1,0 +1,12 @@
+schema_version: 1
+id: operations-deployment/sysctl-kernel-param
+version: 1.0.0
+domain: operations-deployment
+weight: 5
+estimated_minutes: 5
+requires:
+  - procps
+parameters:
+  conf_file: seed-derived configuration file under /etc/sysctl.d
+  swappiness: seed-derived value for vm.swappiness (10-50)
+  pid_max: seed-derived value for kernel.pid_max

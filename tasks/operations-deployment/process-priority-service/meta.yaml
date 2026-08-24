@@ -1,0 +1,13 @@
+schema_version: 1
+id: operations-deployment/process-priority-service
+version: 1.0.0
+domain: operations-deployment
+weight: 15
+estimated_minutes: 10
+requires:
+  - systemd
+parameters:
+  service_name: batch-<token>
+  worker_script: /usr/local/lib/lfcs/batch-<token>.sh
+  nice_value: [5, 10, 12, 15]
+  io_class: [best-effort, idle]

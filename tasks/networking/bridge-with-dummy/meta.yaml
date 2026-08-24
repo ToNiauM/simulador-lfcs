@@ -1,0 +1,14 @@
+schema_version: 1
+id: networking/bridge-with-dummy
+version: 1.0.0
+domain: networking
+weight: 20
+estimated_minutes: 12
+requires:
+  - netplan.io
+  - iproute2
+  - kmod
+parameters:
+  bridge_name: br-<seed>
+  dummy_if: dm<seed>
+  bridge_ip: 192.0.2.<seed>/24

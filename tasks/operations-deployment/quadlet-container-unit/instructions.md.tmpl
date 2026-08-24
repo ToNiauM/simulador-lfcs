@@ -1,0 +1,11 @@
+# Task: Define a container as a systemd Quadlet unit
+
+Describe a container declaratively so that systemd manages it via Podman Quadlet.
+
+Create the Quadlet container unit file `{{container_file}}` describing a container that:
+
+- uses the image `{{image}}`;
+- publishes host port `{{host_port}}` to container port `{{container_port}}`;
+- sets the environment variable `{{env_name}}` to `{{env_value}}`.
+
+The file must be a valid Quadlet unit: systemd's Podman generator must be able to produce a service unit named `{{unit_basename}}.service` from it. Do NOT pull the image and do NOT start the container — this host has no Internet access; only the unit definition is evaluated. The file must persist across reboots.

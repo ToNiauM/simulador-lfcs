@@ -1,0 +1,9 @@
+# Task: Route a syslog facility to a dedicated log file
+
+An application on this server logs through the syslog facility `{{facility}}`, and its messages must be collected in a dedicated file.
+
+1. Create the rsyslog configuration file `{{conf_file}}` with a rule that routes all messages of facility `{{facility}}` (any priority) to the file `{{log_file}}`.
+2. Restart the rsyslog service so the rule is active.
+3. Send a test syslog message through facility `{{facility}}` whose text contains exactly the token `{{test_token}}`, and confirm it was written to `{{log_file}}`.
+
+The configuration must persist across reboots.

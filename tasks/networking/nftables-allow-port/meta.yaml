@@ -1,0 +1,11 @@
+schema_version: 1
+id: networking/nftables-allow-port
+version: 1.0.0
+domain: networking
+weight: 15
+estimated_minutes: 8
+requires:
+  - nftables
+  - systemd
+parameters:
+  tcp_port: seed-derived port in the 20000-39999 range

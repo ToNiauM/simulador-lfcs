@@ -1,0 +1,9 @@
+# Networking Task
+
+Task: Configure the static IPv6 address `{{ipv6_address}}` on the network interface `{{nic}}`.
+
+- The address must be active on `{{nic}}` with global scope.
+- The interface `{{nic}}` must be up.
+- Configure it through netplan, using a new dedicated YAML file; do not overwrite or delete any existing netplan files.
+- Do not modify the configuration of any other network interface, and do not change the system default route.
+- The configuration must persist across reboots.

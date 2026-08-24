@@ -1,0 +1,15 @@
+schema_version: 1
+id: essential-commands/bulk-rename-glob
+version: 1.0.0
+domain: essential-commands
+weight: 5
+estimated_minutes: 4
+requires:
+  - coreutils
+  - bash
+parameters:
+  work_dir: /srv/lote-<token>
+  prefix: [relatorio, exportacao, captura, medida]
+  old_ext: [txt, dat, tmp]
+  new_ext: [log, csv, bak]
+  count: 5-8 files derived from seed

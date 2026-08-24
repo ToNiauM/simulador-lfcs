@@ -1,0 +1,5 @@
+# Task: Runtime directory created at every boot
+
+The application account `{{dir_owner}}` (already present on the system) needs a runtime directory at `{{runtime_dir}}`.
+
+Configure the system so that this directory is created automatically at every boot, owned by user `{{dir_owner}}` and group `{{dir_group}}`, with permissions `{{dir_mode}}`. Use the systemd-tmpfiles mechanism with a configuration file under `/etc/tmpfiles.d`. The directory must also exist right now with the same ownership and permissions, and the configuration must persist across reboots.

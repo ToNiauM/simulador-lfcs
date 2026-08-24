@@ -1,0 +1,12 @@
+schema_version: 1
+id: storage/tmpfs-mount
+version: 1.0.0
+domain: storage
+weight: 5
+estimated_minutes: 5
+requires:
+  - util-linux
+parameters:
+  mount_point: seed-derived directory under /mnt
+  size_mib: [64, 96, 128]
+  mode: ["1777", "0770", "0750"]

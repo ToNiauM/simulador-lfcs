@@ -1,0 +1,13 @@
+schema_version: 1
+id: operations-deployment/bash-script-args
+version: 1.0.0
+domain: operations-deployment
+weight: 10
+estimated_minutes: 8
+requires:
+  - bash
+  - coreutils
+parameters:
+  script_path: /usr/local/bin/argtool-<token>
+  expected_argc: [2, 3]
+  error_exit_code: [2, 3, 4, 5]

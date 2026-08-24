@@ -1,0 +1,14 @@
+schema_version: 1
+id: networking/vlan-interface
+version: 1.0.0
+domain: networking
+weight: 15
+estimated_minutes: 10
+requires:
+  - netplan.io
+  - iproute2
+parameters:
+  nic: enp0s5
+  vlan_id: [100, 3899]
+  vlan_iface: vlan<vlan_id>
+  vlan_ip: 198.51.100.<seed>/24

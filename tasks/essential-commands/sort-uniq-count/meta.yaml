@@ -1,0 +1,12 @@
+schema_version: 1
+id: essential-commands/sort-uniq-count
+version: 1.0.0
+domain: essential-commands
+weight: 10
+estimated_minutes: 6
+requires:
+  - coreutils
+parameters:
+  data_file: /srv/lfcs-<token>/acessos.txt
+  report_file: /root/contagem-<token>.txt
+  items: 5 usernames derived from the seed with distinct counts

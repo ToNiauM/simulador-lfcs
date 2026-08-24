@@ -1,0 +1,11 @@
+# Essential Commands
+
+Task: Create a gzip-compressed tar archive at `{{archive_path}}` containing the full contents of the directory `{{data_dir}}`.
+
+Requirements:
+
+1. every file inside `{{data_dir}}` must be included, EXCEPT files whose name matches the pattern `{{exclude_glob}}`;
+2. file permissions must be preserved in the archive (the script `{{data_dir}}/scripts/run.sh` has mode `{{script_mode}}` and must keep it);
+3. the archive must be readable with standard tar/gzip tools.
+
+Do not modify or remove the contents of `{{data_dir}}`.

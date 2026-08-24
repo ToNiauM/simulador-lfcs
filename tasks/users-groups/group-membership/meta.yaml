@@ -1,0 +1,13 @@
+schema_version: 1
+id: users-groups/group-membership
+version: 1.0.0
+domain: users-groups
+weight: 10
+estimated_minutes: 5
+requires:
+  - passwd
+parameters:
+  group_a: derived group name
+  group_b: derived group name
+  user_one: pre-existing user created by setup
+  user_two: pre-existing user created by setup

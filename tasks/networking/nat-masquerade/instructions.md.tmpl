@@ -1,0 +1,8 @@
+# Networking Task
+
+Task: Turn this server into an IPv4 NAT gateway for a lab subnet.
+
+- Enable IPv4 packet forwarding. This setting must persist across reboots.
+- Using nftables, create a NAT masquerade rule for traffic originating from the subnet `{{lan_subnet}}` and leaving through the interface `{{wan_interface}}`.
+- The rule must be active now and must be restored automatically at boot (the nftables service must be enabled and load the rule from its persistent configuration).
+- Do not modify the primary network interface or the default route.

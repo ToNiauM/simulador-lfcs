@@ -1,0 +1,14 @@
+schema_version: 1
+id: users-groups/shared-group-dir
+version: 1.0.0
+domain: users-groups
+weight: 15
+estimated_minutes: 7
+requires:
+  - passwd
+  - coreutils
+parameters:
+  group_name: collaboration group derived from seed
+  user_one: pre-existing user created by setup
+  user_two: pre-existing user created by setup
+  shared_dir: directory under /srv derived from seed

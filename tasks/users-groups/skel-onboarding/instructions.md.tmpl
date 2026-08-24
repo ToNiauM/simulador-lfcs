@@ -1,0 +1,11 @@
+# Task: Provision new-user template files
+
+1. Create the file `{{skel_file}}` inside `/etc/skel` containing exactly this single line:
+
+   ```
+   {{skel_content}}
+   ```
+
+2. Create the user account `{{username}}` with a home directory, so that the account automatically receives a copy of `{{skel_file}}` in its home directory, owned by that user.
+
+Every user created in the future must also receive this file.

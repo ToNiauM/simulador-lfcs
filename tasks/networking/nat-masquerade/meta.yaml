@@ -1,0 +1,12 @@
+schema_version: 1
+id: networking/nat-masquerade
+version: 1.0.0
+domain: networking
+weight: 15
+estimated_minutes: 10
+requires:
+  - nftables
+  - procps
+parameters:
+  lan_subnet: seed-derived 10.x.y.0/24 lab subnet
+  wan_interface: enp0s5

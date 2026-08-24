@@ -1,0 +1,9 @@
+# Essential Commands
+
+Task: Prepare a collaborative directory for the project group `{{group_name}}`. The group and the users `{{user_a}}` and `{{user_b}}` already exist on the system.
+
+1. Add the users `{{user_a}}` and `{{user_b}}` to the group `{{group_name}}` (as a supplementary group).
+2. Create the directory `{{share_dir}}` with group ownership set to `{{group_name}}`.
+3. Set the permissions of `{{share_dir}}` to mode `{{dir_mode}}`: owner and group have full access, others have no access, and new files created inside must inherit the group `{{group_name}}` (setgid).
+
+Do not change the primary group of either user.

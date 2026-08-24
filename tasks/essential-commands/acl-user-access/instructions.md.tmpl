@@ -1,0 +1,11 @@
+# Essential Commands
+
+Task: The directory `{{data_dir}}` (owned by `root:root`, mode `{{dir_base_mode}}`) holds the files `{{file_a}}` and `{{file_b}}`. The auditor account `{{acl_user}}` already exists and must gain access WITHOUT any change to the directory's owner, group or traditional permission bits.
+
+Using POSIX ACLs:
+
+1. grant the user `{{acl_user}}` read, write and execute (`rwx`) on the directory `{{data_dir}}`;
+2. set a DEFAULT ACL on `{{data_dir}}` so that files and directories created inside it in the future also grant `rwx` to `{{acl_user}}`;
+3. grant the user `{{acl_user}}` read and write (`rw`) on each existing file inside the directory.
+
+The owner (`root`), group (`root`) and base mode `{{dir_base_mode}}` of `{{data_dir}}` must remain unchanged.

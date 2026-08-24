@@ -1,0 +1,12 @@
+schema_version: 1
+id: storage/vg-add-second-pv
+version: 1.0.0
+domain: storage
+weight: 10
+estimated_minutes: 5
+requires:
+  - lvm2
+  - util-linux
+parameters:
+  target_disk: /dev/vdb
+  part_size_mib: [256, 300, 350]

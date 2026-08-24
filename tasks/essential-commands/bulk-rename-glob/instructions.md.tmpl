@@ -1,0 +1,7 @@
+# Essential Commands
+
+Task: The directory `{{work_dir}}` contains {{count}} data files named `{{prefix}}-NN.{{old_ext}}` (where `NN` is a two-digit number) plus other unrelated files.
+
+Rename every file matching `{{prefix}}-*.{{old_ext}}` in `{{work_dir}}` so that it keeps its base name but its extension changes from `.{{old_ext}}` to `.{{new_ext}}`. For example, `{{prefix}}-01.{{old_ext}}` must become `{{prefix}}-01.{{new_ext}}`.
+
+The content of each renamed file must remain unchanged, no file with the `.{{old_ext}}` extension may remain, and every other file in `{{work_dir}}` (including `{{keep_file}}`) must be left untouched.

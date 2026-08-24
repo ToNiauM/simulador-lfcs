@@ -1,0 +1,11 @@
+# Task: Load a kernel module at boot with a module option
+
+Configure this system to use the `{{module}}` kernel module with the module option `numdummies={{numdummies}}`.
+
+Requirements:
+
+- the `{{module}}` module must be loaded right now, with the option `numdummies={{numdummies}}` in effect;
+- the module must be loaded automatically at every boot; persist the module load in the file `{{load_file}}`;
+- the module option must also be applied at every boot; persist it in the file `{{options_file}}`.
+
+The configuration must persist across reboots.

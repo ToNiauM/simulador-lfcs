@@ -1,0 +1,9 @@
+# Essential Commands
+
+Task: The local users `{{key_user}}` and `{{target_user}}` already exist on this system.
+
+Generate an SSH key pair of type `{{key_type}}` with no passphrase for the user `{{key_user}}`, stored at the default location for that user (`~{{key_user}}/.ssh/id_{{key_type}}` and `~{{key_user}}/.ssh/id_{{key_type}}.pub`).
+
+Authorize that key for logins as `{{target_user}}`: install the public key in `~{{target_user}}/.ssh/authorized_keys`.
+
+Permissions and ownership must be correct: each user's `.ssh` directory must be mode `700` and owned by that user; `authorized_keys` must be mode `600` and owned by `{{target_user}}`; the private key must be mode `600` and owned by `{{key_user}}`.

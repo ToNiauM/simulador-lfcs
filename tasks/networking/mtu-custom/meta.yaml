@@ -1,0 +1,12 @@
+schema_version: 1
+id: networking/mtu-custom
+version: 1.0.0
+domain: networking
+weight: 5
+estimated_minutes: 5
+requires:
+  - netplan.io
+  - iproute2
+parameters:
+  nic: enp0s5
+  mtu: [1280, 1300, 1350, 1400, 1420, 1450]

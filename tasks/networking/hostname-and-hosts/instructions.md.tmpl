@@ -1,0 +1,10 @@
+# Networking task
+
+Task: Set the static hostname of this system to `{{new_hostname}}`. The hostname must be in effect now and must persist across reboots.
+
+Additionally, configure local name resolution in `/etc/hosts` so that the following names resolve to the given addresses, with the fully qualified name and the short name on the same entry:
+
+- `{{fqdn_a}}` and `{{host_a}}` -> `{{ip_a}}`
+- `{{fqdn_b}}` and `{{host_b}}` -> `{{ip_b}}`
+
+Do not remove any existing entries from `/etc/hosts`.

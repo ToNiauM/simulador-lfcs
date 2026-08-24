@@ -1,0 +1,10 @@
+# Task: Override a service with a drop-in file
+
+The service `{{service_name}}.service` is installed and running on this system. Do not modify its original unit file.
+
+Create the drop-in file `/etc/systemd/system/{{service_name}}.service.d/override.conf` that:
+
+- changes the restart policy of the service to `{{restart_policy}}`;
+- adds the environment variable `{{env_name}}={{env_value}}` to the service.
+
+The override must already be applied to the service manager (the running configuration of the unit must reflect both changes) and must persist across reboots.

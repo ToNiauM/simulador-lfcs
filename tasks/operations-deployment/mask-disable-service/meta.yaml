@@ -1,0 +1,11 @@
+schema_version: 1
+id: operations-deployment/mask-disable-service
+version: 1.0.0
+domain: operations-deployment
+weight: 5
+estimated_minutes: 4
+requires:
+  - systemd
+parameters:
+  service_mask: batch-<seed5>.service
+  service_disable: report-<seed5>.service

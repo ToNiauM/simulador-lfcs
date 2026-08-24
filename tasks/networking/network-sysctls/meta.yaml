@@ -1,0 +1,12 @@
+schema_version: 1
+id: networking/network-sysctls
+version: 1.0.0
+domain: networking
+weight: 10
+estimated_minutes: 6
+requires:
+  - procps
+parameters:
+  tcp_syncookies: 1
+  somaxconn: [1024, 2048, 4096]
+  tcp_fin_timeout: [15, 20, 25, 30]

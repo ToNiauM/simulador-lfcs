@@ -1,0 +1,12 @@
+schema_version: 1
+id: operations-deployment/profile-env-persistent
+version: 1.0.0
+domain: operations-deployment
+weight: 5
+estimated_minutes: 5
+requires:
+  - bash
+parameters:
+  var_name: LFCS_APP_<TOKEN>
+  var_value: lab-<hex>
+  script_path: /etc/profile.d/lfcs-<token>.sh

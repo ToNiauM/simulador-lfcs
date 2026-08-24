@@ -1,0 +1,11 @@
+schema_version: 1
+id: operations-deployment/default-boot-target
+version: 1.0.0
+domain: operations-deployment
+weight: 5
+estimated_minutes: 3
+requires:
+  - systemd
+parameters:
+  expected_target: default boot target the candidate must configure
+  initial_target: boot target configured by setup as the starting state

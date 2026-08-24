@@ -1,0 +1,7 @@
+# Task: Swap file and swappiness
+
+Create a swap file at `{{swap_file}}` with a size of `{{swap_size_mib}} MiB` and activate it. The swap file must be activated automatically at boot; the configuration must persist across reboots.
+
+Set the kernel parameter `vm.swappiness` to `{{swappiness}}`. The value must be in effect immediately and must persist across reboots.
+
+Do not use `/dev/vdb` or any block device for this task; the swap area must be a regular file on the root filesystem.

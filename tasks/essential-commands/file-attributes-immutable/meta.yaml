@@ -1,0 +1,12 @@
+schema_version: 1
+id: essential-commands/file-attributes-immutable
+version: 1.0.0
+domain: essential-commands
+weight: 5
+estimated_minutes: 4
+requires:
+  - e2fsprogs
+parameters:
+  work_dir: /srv/protegido-<token>
+  immutable_file: config-<token>.conf
+  append_file: registro-<token>.log

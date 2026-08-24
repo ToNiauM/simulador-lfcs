@@ -1,0 +1,5 @@
+# Storage Task
+
+Task: Create two partitions of approximately `{{part_size_mib}}` MiB each on `{{target_disk}}` and assemble them into a software RAID1 array (e.g. `/dev/md0`). Format the array with `{{filesystem}}` and mount it at `{{mount_point}}`.
+
+Record the array in `/etc/mdadm/mdadm.conf` and make the mount persist across reboots. Updating the initramfs is not required. Do not touch any other disks.
