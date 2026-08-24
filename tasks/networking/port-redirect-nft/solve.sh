@@ -12,12 +12,17 @@ nft add table ip "$table"
 nft -- add chain ip "$table" prerouting '{ type nat hook prerouting priority -100 ; policy accept ; }'
 nft add rule ip "$table" prerouting tcp dport "$src_port" redirect to :"$dst_port"
 
-# Persistence: append the task table to /etc/nftables.conf (loaded by
-# nftables.service at boot). Never rewrite the distro file, only append.
-conf=/etc/nftables.conf
-[[ -f "$conf" ]] || printf '#!/usr/sbin/nft -f\nflush ruleset\n' > "$conf"
-if ! grep -q "table ip $table" "$conf"; then
-  cat >> "$conf" <<NFT
+# Persistence: family-specific boot-time nftables configuration. Never
+# rewrite the distro file, only append.
+. /etc/os-release
+case " ${ID:-} ${ID_LIKE:-} " in
+  *debian*|*ubuntu*) family=debian ;;
+  *rhel*|*fedora*|*centos*) family=rhel ;;
+  *) echo "unsupported distro" >&2; exit 65 ;;
+esac
+
+table_snippet() {
+  cat <<NFT
 
 table ip ${table} {
 	chain prerouting {
@@ -26,6 +31,23 @@ table ip ${table} {
 	}
 }
 NFT
+}
+
+if [[ "$family" == debian ]]; then
+  # Debian family: nftables.service loads /etc/nftables.conf.
+  conf=/etc/nftables.conf
+  [[ -f "$conf" ]] || printf '#!/usr/sbin/nft -f\nflush ruleset\n' > "$conf"
+  grep -q "table ip $table" "$conf" || table_snippet >> "$conf"
+  nft -c -f "$conf"
+else
+  # RHEL family: nftables.service loads /etc/sysconfig/nftables.conf.
+  # Dedicated fragment included from it, keeping existing content intact.
+  frag=/etc/nftables/lfcs-port-redirect.nft
+  mkdir -p /etc/nftables
+  table_snippet > "$frag"
+  conf=/etc/sysconfig/nftables.conf
+  [[ -f "$conf" ]] || : > "$conf"
+  grep -qF "\"$frag\"" "$conf" || printf 'include "%s"\n' "$frag" >> "$conf"
+  nft -c -f "$frag"
 fi
-nft -c -f "$conf"
 systemctl enable nftables.service

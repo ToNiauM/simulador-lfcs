@@ -2,7 +2,7 @@
 
 Task: Configure DNS search domains for the secondary network interface.
 
-- Using netplan, configure the DNS search domains `{{search_domain_1}}` and `{{search_domain_2}}` on the interface `{{interface}}`.
-- Create a new netplan configuration file; do not modify the existing files in `/etc/netplan`.
-- The search domains must be active on that link (visible to systemd-resolved) and must persist across reboots.
+- Configure the DNS search domains `{{search_domain_1}}` and `{{search_domain_2}}` on the interface `{{interface}}`.
+- Add your own configuration; do not modify or delete existing network configuration files.
+- The search domains must be active for that interface and must persist across reboots.
 - Do not modify the primary network interface or the default route.

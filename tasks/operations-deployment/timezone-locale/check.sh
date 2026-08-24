@@ -29,16 +29,21 @@ available = {normalize(entry) for entry in run("locale", "-a").split()}
 gen_ok = normalize(locale) in available
 c3 = criterion("locale_generated", gen_ok, 3, "requested locale is generated", locale if gen_ok else f"{locale} not in locale -a")
 
-lang = ""
-lang_evidence = "/etc/default/locale missing"
-if os.path.isfile("/etc/default/locale"):
-    lang_evidence = "no LANG entry in /etc/default/locale"
-    for line in open("/etc/default/locale"):
+# Persistent default LANG: /etc/default/locale (Debian) or /etc/locale.conf (RHEL).
+lang_ok = False
+lang_evidence = "neither /etc/default/locale nor /etc/locale.conf sets LANG"
+for path in ("/etc/default/locale", "/etc/locale.conf"):
+    if lang_ok or not os.path.isfile(path):
+        continue
+    for line in open(path):
         text = line.split("#", 1)[0].strip()
         if text.startswith("LANG="):
             lang = text.split("=", 1)[1].strip().strip('"').strip("'")
-            lang_evidence = text
-c4 = criterion("default_lang", normalize(lang) == normalize(locale), 2, "requested locale is the default LANG", lang_evidence)
+            lang_evidence = f"{path}: {text}"
+            if normalize(lang) == normalize(locale):
+                lang_ok = True
+                break
+c4 = criterion("default_lang", lang_ok, 2, "requested locale is the default LANG", lang_evidence)
 
 criteria = [c1, c2, c3, c4]
 score = sum(item["points"] for item in criteria)

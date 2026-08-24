@@ -4,6 +4,6 @@ Task: Create a VLAN interface named `{{vlan_iface}}` with VLAN ID `{{vlan_id}}` 
 
 - The interface `{{vlan_iface}}` must exist, be up, and carry the address `{{vlan_ip}}`.
 - It must be tagged with VLAN ID `{{vlan_id}}` and be attached to `{{nic}}`.
-- Configure it through netplan, using a new dedicated YAML file; do not overwrite or delete any existing netplan files.
+- Persist the configuration in a new dedicated configuration file; do not overwrite or delete any existing network configuration files.
 - Do not modify the configuration of any other network interface, and do not change the system default route.
 - The configuration must persist across reboots.

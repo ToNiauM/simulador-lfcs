@@ -1,11 +1,10 @@
 schema_version: 1
 id: networking/vlan-interface
-version: 1.0.0
+version: 1.1.0
 domain: networking
 weight: 15
 estimated_minutes: 10
 requires:
-  - netplan.io
   - iproute2
 parameters:
   nic: enp0s5

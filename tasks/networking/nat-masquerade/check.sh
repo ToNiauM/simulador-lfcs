@@ -73,7 +73,9 @@ except OSError:
     pass
 c2 = criterion("forwarding_active", forward_now == "1", 2, "IPv4 forwarding is currently enabled", f"net.ipv4.ip_forward={forward_now or 'unreadable'}")
 
-# Persistent nftables config: /etc/nftables.conf plus any files it includes.
+# Persistent nftables config: the boot-time configuration of either family
+# (/etc/nftables.conf on Debian, /etc/sysconfig/nftables.conf on RHEL) plus
+# any files it includes.
 def collect_nft_text(path, seen):
     if path in seen or not os.path.isfile(path):
         return ""
@@ -86,11 +88,17 @@ def collect_nft_text(path, seen):
         for resolved in sorted(glob.glob(target)):
             text += "\n" + collect_nft_text(resolved, seen)
     return text
-nft_text = collect_nft_text("/etc/nftables.conf", set())
-persist_ok = "masquerade" in nft_text and subnet in nft_text and wan in nft_text
+persist_ok = False
+persist_root = ""
+for root in ("/etc/nftables.conf", "/etc/sysconfig/nftables.conf"):
+    nft_text = collect_nft_text(root, set())
+    if "masquerade" in nft_text and subnet in nft_text and wan in nft_text:
+        persist_ok = True
+        persist_root = root
+        break
 c3 = criterion("masquerade_persistent", persist_ok, 2,
                "persistent nftables configuration restores the masquerade rule at boot",
-               "found subnet, interface and masquerade in /etc/nftables.conf (with includes)" if persist_ok else "rule not found in /etc/nftables.conf or its includes")
+               f"found subnet, interface and masquerade in {persist_root} (with includes)" if persist_ok else "rule not found in /etc/nftables.conf or /etc/sysconfig/nftables.conf (includes followed)")
 
 enabled = run("systemctl", "is-enabled", "nftables.service")
 c4 = criterion("nftables_enabled", enabled == "enabled", 1, "nftables service is enabled at boot", enabled or "unknown")

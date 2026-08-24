@@ -2,7 +2,7 @@
 
 Task: Fully configure the secondary network interface `{{interface}}` for the engineering lab network.
 
-Using a single, new netplan configuration file (do not modify the existing files in `/etc/netplan`):
+Add your own configuration without modifying or deleting any existing network configuration files:
 
 - assign the static address `{{address}}` to `{{interface}}` (no DHCP);
 - add a static route to `{{route_to}}` via the gateway `{{route_via}}`, treating the gateway as reachable on-link;

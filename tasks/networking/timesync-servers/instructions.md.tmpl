@@ -1,9 +1,8 @@
 # Networking Task
 
-Task: Configure time synchronization on this server using systemd-timesyncd.
+Task: Configure time synchronization on this server using the system's time synchronization service.
 
 - Use `{{ntp_server_1}}` and `{{ntp_server_2}}` as the primary NTP servers.
-- Use `{{fallback_server}}` as the fallback NTP server.
-- Place the configuration in a drop-in file inside `/etc/systemd/timesyncd.conf.d/`.
-- The systemd-timesyncd service must be enabled and active.
+- Also configure `{{fallback_server}}` as a fallback NTP server (if your time synchronization service has no dedicated fallback setting, configure it as an additional server).
+- The time synchronization service must be enabled and active.
 - The configuration must persist across reboots.

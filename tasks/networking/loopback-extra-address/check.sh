@@ -4,9 +4,12 @@ set -euo pipefail
 [[ -n "${LFCS_PARAMS_FILE:-}" && -r "$LFCS_PARAMS_FILE" ]] || { echo '{"schema_version":1,"task_id":"networking/loopback-extra-address","result":"error","score":0,"max_score":10,"criteria":[{"id":"parameters","result":"error","points":0,"max_points":10,"message":"missing parameters","evidence":"LFCS_PARAMS_FILE unavailable"}]}' ; exit 0; }
 
 python3 - "$LFCS_PARAMS_FILE" <<'PY'
-import configparser, glob, json, subprocess, sys
+import configparser, glob, json, os, subprocess, sys
 
-import yaml
+try:
+    import yaml
+except ImportError:
+    yaml = None
 
 payload = json.load(open(sys.argv[1]))
 p = payload["params"]
@@ -37,7 +40,7 @@ def address_matches(value):
     return value == cidr or (prefix_len == 32 and value == plain_ip)
 
 persist_source = ""
-for path in sorted(glob.glob("/etc/netplan/*.yaml")) + sorted(glob.glob("/etc/netplan/*.yml")):
+for path in (sorted(glob.glob("/etc/netplan/*.yaml")) + sorted(glob.glob("/etc/netplan/*.yml"))) if yaml else []:
     try:
         data = yaml.safe_load(open(path)) or {}
     except Exception:
@@ -62,9 +65,33 @@ if not persist_source:
             line = line.strip()
             if line.startswith("Address") and "=" in line and address_matches(line.split("=", 1)[1].strip()):
                 persist_source = f"{path}: Address={line.split('=', 1)[1].strip()}"
+if not persist_source:
+    # NetworkManager keyfiles (RHEL family): a connection for lo (type
+    # loopback or interface-name lo) whose [ipv4] addressN carries the address.
+    for path in sorted(glob.glob("/etc/NetworkManager/system-connections/*")):
+        if not os.path.isfile(path):
+            continue
+        parser = configparser.ConfigParser(strict=False, interpolation=None)
+        try:
+            parser.read(path)
+        except Exception:
+            continue
+        if not parser.has_section("connection"):
+            continue
+        is_lo = parser.get("connection", "interface-name", fallback="") == "lo" or \
+                parser.get("connection", "type", fallback="") == "loopback"
+        if not is_lo or not parser.has_section("ipv4"):
+            continue
+        for key, value in parser.items("ipv4"):
+            if not key.startswith("address"):
+                continue
+            for chunk in str(value).split(";"):
+                candidate = chunk.split(",", 1)[0].strip()
+                if candidate and address_matches(candidate):
+                    persist_source = f"nm-keyfile:{path}: {key}={candidate}"
 c2 = criterion("address_persistent", bool(persist_source), 4,
                "persistent configuration restores the address at boot",
-               persist_source or "no netplan or systemd-networkd config found for lo with the address")
+               persist_source or "no netplan, systemd-networkd or NetworkManager config found for lo with the address")
 
 c3 = criterion("loopback_intact", have_base, 2,
                "loopback still holds 127.0.0.1", summary or "no IPv4 addresses on lo")

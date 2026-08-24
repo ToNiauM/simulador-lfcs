@@ -1,6 +1,6 @@
 schema_version: 1
 id: networking/nat-masquerade
-version: 1.0.0
+version: 1.1.0
 domain: networking
 weight: 15
 estimated_minutes: 10

@@ -7,9 +7,9 @@ require_guest_root
 # sure forwarding starts disabled so the task actually has work to do.
 nft list table ip lfcs_nat >/dev/null 2>&1 && nft delete table ip lfcs_nat
 rm -f /etc/nftables-lfcs.nft /etc/sysctl.d/99-lfcs-ipforward.conf
-if [[ -f /etc/nftables.conf ]]; then
-  sed -i '\|/etc/nftables-lfcs\.nft|d' /etc/nftables.conf
-fi
+for conf in /etc/nftables.conf /etc/sysconfig/nftables.conf; do
+  [[ -f "$conf" ]] && sed -i '\|/etc/nftables-lfcs\.nft|d' "$conf"
+done
 echo 0 > /proc/sys/net/ipv4/ip_forward
 
 mkdir -p /var/lib/lfcs-simulator

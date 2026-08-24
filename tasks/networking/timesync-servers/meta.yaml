@@ -1,11 +1,11 @@
 schema_version: 1
 id: networking/timesync-servers
-version: 1.0.0
+version: 1.1.0
 domain: networking
 weight: 10
 estimated_minutes: 6
 requires:
-  - systemd-timesyncd
+  - systemd-timesyncd or chrony
 parameters:
   ntp_server_1: seed-derived hostname (ntp1.lab-<token>.example)
   ntp_server_2: seed-derived hostname (ntp2.lab-<token>.example)

@@ -1,5 +1,5 @@
 # Networking task
 
-Task: Configure the static IPv4 address `{{ip_address}}/{{prefix_len}}` on the network interface `{{lab_nic}}` using netplan. Put the configuration in the file `{{netplan_file}}`, with DHCP disabled for that interface. The address must be active now and must persist across reboots.
+Task: Configure the static IPv4 address `{{ip_address}}/{{prefix_len}}` on the network interface `{{lab_nic}}`, with DHCP disabled for that interface. The address must be active now and the configuration must persist across reboots.
 
-Do not modify the configuration of the primary network interface or the default route, and do not edit any pre-existing netplan file.
+Do not modify the configuration of the primary network interface or the default route, and do not modify or delete any configuration files you did not create.

@@ -1,5 +1,5 @@
 # Networking task
 
-Task: The interface `{{lab_nic}}` is already configured with the static address `{{lab_ip}}/{{prefix_len}}` via netplan. Add a static route to the network `{{dest_network}}` through the gateway `{{gateway}}` on the interface `{{lab_nic}}`, using netplan. Put your configuration in the file `{{netplan_file}}`. The route must be present in the routing table now and must persist across reboots.
+Task: The interface `{{lab_nic}}` is already configured with the static address `{{lab_ip}}/{{prefix_len}}`. Add a static route to the network `{{dest_network}}` through the gateway `{{gateway}}` on the interface `{{lab_nic}}`. The route must be present in the routing table now and the configuration must persist across reboots.
 
-Do not modify the configuration of the primary network interface or the default route, and do not edit any pre-existing netplan file.
+Do not modify the configuration of the primary network interface or the default route, and do not modify or delete any configuration files you did not create.

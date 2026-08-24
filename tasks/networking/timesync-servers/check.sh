@@ -17,10 +17,10 @@ ntp1 = p["ntp_server_1"]
 ntp2 = p["ntp_server_2"]
 fallback = p["fallback_server"]
 
-# Parse timesyncd drop-in directory with systemd drop-in semantics (later files win).
+# --- systemd-timesyncd: main config plus drop-ins (drop-ins win, later files win).
 ntp_vals, fb_vals = [], []
 ntp_src, fb_src = "", ""
-for path in sorted(glob.glob("/etc/systemd/timesyncd.conf.d/*.conf")):
+for path in ["/etc/systemd/timesyncd.conf"] + sorted(glob.glob("/etc/systemd/timesyncd.conf.d/*.conf")):
     section = ""
     try:
         lines = open(path).read().splitlines()
@@ -41,32 +41,86 @@ for path in sorted(glob.glob("/etc/systemd/timesyncd.conf.d/*.conf")):
             ntp_vals, ntp_src = value.split(), path
         elif key == "FallbackNTP":
             fb_vals, fb_src = value.split(), path
+tsync_primary = ntp1 in ntp_vals and ntp2 in ntp_vals
+tsync_fallback = fallback in fb_vals
 
-c1 = criterion("dropin_ntp_servers", ntp1 in ntp_vals and ntp2 in ntp_vals, 3,
-               "drop-in in /etc/systemd/timesyncd.conf.d sets the required NTP servers",
-               f"{ntp_src or 'no drop-in'}: NTP={' '.join(ntp_vals) or '-'}")
-c2 = criterion("dropin_fallback", fallback in fb_vals, 2,
-               "drop-in sets the required FallbackNTP server",
-               f"{fb_src or 'no drop-in'}: FallbackNTP={' '.join(fb_vals) or '-'}")
+# --- chrony: main config on either family plus common include directories.
+chrony_hits = {}
+chrony_paths = ["/etc/chrony/chrony.conf", "/etc/chrony.conf"] \
+    + sorted(glob.glob("/etc/chrony/conf.d/*")) \
+    + sorted(glob.glob("/etc/chrony/sources.d/*")) \
+    + sorted(glob.glob("/etc/chrony.d/*"))
+for path in chrony_paths:
+    try:
+        lines = open(path).read().splitlines()
+    except OSError:
+        continue
+    for raw in lines:
+        line = raw.strip()
+        if not line or line.startswith(("#", ";", "!", "%")):
+            continue
+        parts = line.split()
+        if len(parts) >= 2 and parts[0] in ("server", "pool", "peer"):
+            chrony_hits.setdefault(parts[1], path)
+chrony_primary = ntp1 in chrony_hits and ntp2 in chrony_hits
+chrony_fallback = fallback in chrony_hits
 
-enabled = run("systemctl", "is-enabled", "systemd-timesyncd.service")
-c3 = criterion("service_enabled", enabled == "enabled", 2,
-               "systemd-timesyncd service is enabled", enabled or "unknown")
-active = run("systemctl", "is-active", "systemd-timesyncd.service")
-c4 = criterion("service_active", active == "active", 1,
-               "systemd-timesyncd service is active", active or "unknown")
+if tsync_primary:
+    ev1 = f"timesyncd:{ntp_src}: NTP={' '.join(ntp_vals)}"
+elif chrony_primary:
+    ev1 = f"chrony:{chrony_hits[ntp1]}"
+else:
+    ev1 = f"timesyncd NTP={' '.join(ntp_vals) or '-'}; chrony servers={' '.join(sorted(chrony_hits)) or '-'}"
+c1 = criterion("dropin_ntp_servers", tsync_primary or chrony_primary, 3,
+               "persistent time sync configuration sets the required primary NTP servers", ev1)
 
-props = {}
-for line in run("timedatectl", "show-timesync").splitlines():
-    if "=" in line:
-        key, value = line.split("=", 1)
-        props[key] = value
-system_ntp = props.get("SystemNTPServers", "").split()
-fallback_ntp = props.get("FallbackNTPServers", "").split()
-runtime_ok = ntp1 in system_ntp and ntp2 in system_ntp and fallback in fallback_ntp
+if tsync_fallback:
+    ev2 = f"timesyncd:{fb_src}: FallbackNTP={' '.join(fb_vals)}"
+elif chrony_fallback:
+    ev2 = f"chrony:{chrony_hits[fallback]}"
+else:
+    ev2 = f"timesyncd FallbackNTP={' '.join(fb_vals) or '-'}; chrony servers={' '.join(sorted(chrony_hits)) or '-'}"
+c2 = criterion("dropin_fallback", tsync_fallback or chrony_fallback, 2,
+               "persistent time sync configuration sets the required fallback NTP server", ev2)
+
+units = ("systemd-timesyncd.service", "chronyd.service", "chrony.service")
+enabled_unit = ""
+for unit in units:
+    if run("systemctl", "is-enabled", unit) == "enabled":
+        enabled_unit = unit
+        break
+c3 = criterion("service_enabled", bool(enabled_unit), 2,
+               "a time synchronization service (systemd-timesyncd or chrony) is enabled",
+               enabled_unit or "no time sync service enabled")
+
+active_unit = ""
+for unit in units:
+    if run("systemctl", "is-active", unit) == "active":
+        active_unit = unit
+        break
+c4 = criterion("service_active", bool(active_unit), 1,
+               "a time synchronization service (systemd-timesyncd or chrony) is active",
+               active_unit or "no time sync service active")
+
+runtime_ok = False
+ev5 = "no time synchronization daemon active"
+if active_unit == "systemd-timesyncd.service":
+    props = {}
+    for line in run("timedatectl", "show-timesync").splitlines():
+        if "=" in line:
+            key, value = line.split("=", 1)
+            props[key] = value
+    system_ntp = props.get("SystemNTPServers", "").split()
+    fallback_ntp = props.get("FallbackNTPServers", "").split()
+    runtime_ok = ntp1 in system_ntp and ntp2 in system_ntp and fallback in fallback_ntp
+    ev5 = f"timesyncd: SystemNTPServers={' '.join(system_ntp) or '-'} FallbackNTPServers={' '.join(fallback_ntp) or '-'}"
+elif active_unit in ("chronyd.service", "chrony.service"):
+    # Seeded hostnames never resolve, so chronyc sources cannot list them;
+    # the daemon loading a config that declares all servers is the evidence.
+    runtime_ok = chrony_primary and chrony_fallback
+    ev5 = f"chrony: {active_unit} active; servers declared in {chrony_hits.get(ntp1, 'no config')}"
 c5 = criterion("runtime_servers", runtime_ok, 2,
-               "timedatectl show-timesync reports the configured servers",
-               f"SystemNTPServers={' '.join(system_ntp) or '-'} FallbackNTPServers={' '.join(fallback_ntp) or '-'}")
+               "the running time sync daemon uses the configured servers", ev5)
 
 criteria = [c1, c2, c3, c4, c5]
 score = sum(item["points"] for item in criteria)

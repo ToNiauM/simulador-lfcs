@@ -59,7 +59,7 @@ c3 = criterion("redirect_rule", bool(matched), 3,
                "active rule redirects the requested TCP port to the local port",
                matched or "no matching redirect rule in the running ruleset")
 
-conf_files = ["/etc/nftables.conf"]
+conf_files = ["/etc/nftables.conf", "/etc/sysconfig/nftables.conf"]
 text_by_file = {}
 seen = set()
 while conf_files:

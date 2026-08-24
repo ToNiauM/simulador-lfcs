@@ -4,7 +4,7 @@ set -euo pipefail
 [[ -n "${LFCS_PARAMS_FILE:-}" && -r "$LFCS_PARAMS_FILE" ]] || { echo '{"schema_version":1,"task_id":"networking/bridge-with-dummy","result":"error","score":0,"max_score":10,"criteria":[{"id":"parameters","result":"error","points":0,"max_points":10,"message":"missing parameters","evidence":"LFCS_PARAMS_FILE unavailable"}]}' ; exit 0; }
 
 python3 - "$LFCS_PARAMS_FILE" <<'PY'
-import configparser, glob, ipaddress, json, re, subprocess, sys
+import configparser, glob, ipaddress, json, os, re, subprocess, sys
 
 payload = json.load(open(sys.argv[1]))
 p = payload["params"]
@@ -93,9 +93,46 @@ if not persist:
             bridged = True
     if netdev_kinds.get(bridge) == "bridge" and netdev_kinds.get(dummy) == "dummy" and bridged:
         persist = "systemd-networkd:/etc/systemd/network"
+if not persist:
+    # NetworkManager keyfiles (RHEL family): a bridge profile for the bridge
+    # plus a dummy profile enslaved to it.
+    conns = []
+    for path in sorted(glob.glob("/etc/NetworkManager/system-connections/*")):
+        if not os.path.isfile(path):
+            continue
+        parser = configparser.ConfigParser(strict=False, interpolation=None)
+        try:
+            parser.read(path)
+        except Exception:
+            continue
+        if parser.has_section("connection"):
+            conns.append((path, parser))
+    bridge_refs = {bridge}
+    nm_bridge = ""
+    for path, parser in conns:
+        if parser.get("connection", "type", fallback="") == "bridge" and \
+           parser.get("connection", "interface-name", fallback="") == bridge:
+            nm_bridge = path
+            bridge_refs.add(parser.get("connection", "uuid", fallback=""))
+            bridge_refs.add(parser.get("connection", "id", fallback=""))
+    bridge_refs.discard("")
+    nm_dummy = ""
+    for path, parser in conns:
+        if parser.get("connection", "type", fallback="") != "dummy":
+            continue
+        if parser.get("connection", "interface-name", fallback="") != dummy:
+            continue
+        master = parser.get("connection", "master", fallback="") or \
+                 parser.get("connection", "controller", fallback="")
+        slave_type = parser.get("connection", "slave-type", fallback="") or \
+                     parser.get("connection", "port-type", fallback="")
+        if master in bridge_refs and slave_type in ("", "bridge"):
+            nm_dummy = path
+    if nm_bridge and nm_dummy:
+        persist = f"nm-keyfile:{nm_bridge}"
 c4 = criterion("persistent", bool(persist), 2,
                "bridge and dummy port are declared in persistent network configuration",
-               persist or "no netplan or systemd-networkd declaration found")
+               persist or "no netplan, systemd-networkd or NetworkManager declaration found")
 
 module_file = ""
 for path in sorted(glob.glob("/etc/modules-load.d/*.conf")):

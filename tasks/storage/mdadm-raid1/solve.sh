@@ -14,10 +14,14 @@ parted -s "$disk" mklabel gpt \
 udevadm settle
 mdadm --create /dev/md0 --level=1 --raid-devices=2 --metadata=1.2 --run "${disk}1" "${disk}2"
 mkfs -t "$fs" -F /dev/md0
-mkdir -p /etc/mdadm
-touch /etc/mdadm/mdadm.conf
-sed -i '/^ARRAY[[:space:]]/d' /etc/mdadm/mdadm.conf
-mdadm --detail --scan >> /etc/mdadm/mdadm.conf
+. /etc/os-release
+case " ${ID:-} ${ID_LIKE:-} " in
+  *debian*|*ubuntu*) mdadm_conf=/etc/mdadm/mdadm.conf; mkdir -p /etc/mdadm ;;
+  *) mdadm_conf=/etc/mdadm.conf ;;
+esac
+touch "$mdadm_conf"
+sed -i '/^ARRAY[[:space:]]/d' "$mdadm_conf"
+mdadm --detail --scan >> "$mdadm_conf"
 mkdir -p "$mount_point"
 uuid="$(blkid -s UUID -o value /dev/md0)"
 sed -i "\\|[[:space:]]$mount_point[[:space:]]|d" /etc/fstab

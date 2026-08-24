@@ -3,5 +3,5 @@
 Task: Add an additional IPv4 address to the loopback interface.
 
 - Assign the address `{{loopback_address}}` to the interface `lo`.
-- The address must be active now and must be restored automatically at boot (configure it via netplan or a systemd-networkd configuration file).
+- The address must be active now and must be restored automatically at boot through persistent network configuration.
 - Do not remove `127.0.0.1/8` and do not modify any other interface.

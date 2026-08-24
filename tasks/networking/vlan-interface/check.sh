@@ -4,7 +4,7 @@ set -euo pipefail
 [[ -n "${LFCS_PARAMS_FILE:-}" && -r "$LFCS_PARAMS_FILE" ]] || { echo '{"schema_version":1,"task_id":"networking/vlan-interface","result":"error","score":0,"max_score":10,"criteria":[{"id":"parameters","result":"error","points":0,"max_points":10,"message":"missing parameters","evidence":"LFCS_PARAMS_FILE unavailable"}]}' ; exit 0; }
 
 python3 - "$LFCS_PARAMS_FILE" <<'PY'
-import glob, ipaddress, json, subprocess, sys
+import configparser, glob, ipaddress, json, os, subprocess, sys
 
 payload = json.load(open(sys.argv[1]))
 p = payload["params"]
@@ -66,12 +66,43 @@ try:
         vlans = ((node.get("network", {}) or {}).get("vlans", {}) or {})
         cfg = vlans.get(vlan_iface) or {}
         if cfg.get("id") == vlan_id and cfg.get("link") == nic:
-            persist = path
+            persist = f"netplan:{path}"
 except ImportError:
     pass
+if not persist:
+    # NetworkManager keyfiles (RHEL family): a vlan profile with the requested
+    # ID whose parent is the NIC (by interface name or by connection uuid/id).
+    conns = []
+    for path in sorted(glob.glob("/etc/NetworkManager/system-connections/*")):
+        if not os.path.isfile(path):
+            continue
+        parser = configparser.ConfigParser(strict=False, interpolation=None)
+        try:
+            parser.read(path)
+        except Exception:
+            continue
+        if parser.has_section("connection"):
+            conns.append((path, parser))
+    nic_refs = {nic}
+    for path, parser in conns:
+        if parser.get("connection", "interface-name", fallback="") == nic:
+            nic_refs.add(parser.get("connection", "uuid", fallback=""))
+            nic_refs.add(parser.get("connection", "id", fallback=""))
+    nic_refs.discard("")
+    for path, parser in conns:
+        if parser.get("connection", "type", fallback="") != "vlan":
+            continue
+        if parser.get("connection", "interface-name", fallback="") != vlan_iface:
+            continue
+        if not parser.has_section("vlan"):
+            continue
+        kf_id = parser.get("vlan", "id", fallback="")
+        kf_parent = parser.get("vlan", "parent", fallback="")
+        if kf_id.strip() == str(vlan_id) and kf_parent in nic_refs:
+            persist = f"nm-keyfile:{path}"
 c4 = criterion("netplan_persistent", bool(persist), 3,
-               "a netplan file declares the VLAN with the requested ID and parent",
-               persist or "no netplan file declares the VLAN")
+               "a persistent network configuration file declares the VLAN with the requested ID and parent",
+               persist or "no netplan or NetworkManager configuration declares the VLAN")
 
 criteria = [c1, c2, c3, c4]
 score = sum(item["points"] for item in criteria)

@@ -4,7 +4,7 @@ set -euo pipefail
 [[ -n "${LFCS_PARAMS_FILE:-}" && -r "$LFCS_PARAMS_FILE" ]] || { echo '{"schema_version":1,"task_id":"operations-deployment/grub-cmdline-param","result":"error","score":0,"max_score":10,"criteria":[{"id":"parameters","result":"error","points":0,"max_points":10,"message":"missing parameters","evidence":"LFCS_PARAMS_FILE unavailable"}]}' ; exit 0; }
 
 python3 - "$LFCS_PARAMS_FILE" <<'PY'
-import json, os, re, sys
+import glob, json, os, re, sys
 
 payload = json.load(open(sys.argv[1]))
 p = payload["params"]
@@ -25,13 +25,26 @@ if os.path.isfile("/etc/default/grub"):
             default_evidence = line.strip()
 c1 = criterion("default_grub", default_ok, 3, "parameter present in GRUB_CMDLINE_LINUX in /etc/default/grub", default_evidence)
 
+# Regenerated boot configuration of either family: grub.cfg (Debian or RHEL
+# locations, BIOS or EFI) or BLS entries under /boot/loader/entries.
+candidates = ["/boot/grub/grub.cfg", "/boot/grub2/grub.cfg"]
+candidates += sorted(glob.glob("/boot/efi/EFI/*/grub.cfg"))
+candidates += sorted(glob.glob("/boot/loader/entries/*.conf"))
 cfg_ok = False
-cfg_evidence = "/boot/grub/grub.cfg missing"
-if os.path.isfile("/boot/grub/grub.cfg"):
-    cfg = open("/boot/grub/grub.cfg", errors="replace").read()
-    cfg_ok = bool(re.search(r"(^|[\s\"'])" + re.escape(param) + r"($|[\s\"'])", cfg))
-    cfg_evidence = "parameter found in generated grub.cfg" if cfg_ok else "parameter absent from generated grub.cfg"
-c2 = criterion("grub_cfg", cfg_ok, 3, "GRUB configuration was regenerated with the parameter", cfg_evidence)
+checked = []
+cfg_pattern = re.compile(r"(^|[\s\"'])" + re.escape(param) + r"($|[\s\"'])", re.MULTILINE)
+cfg_evidence = "no generated boot configuration file found"
+for path in candidates:
+    if not os.path.isfile(path):
+        continue
+    checked.append(path)
+    if cfg_pattern.search(open(path, errors="replace").read()):
+        cfg_ok = True
+        cfg_evidence = f"parameter found in {path}"
+        break
+if not cfg_ok and checked:
+    cfg_evidence = "parameter absent from " + ", ".join(checked)
+c2 = criterion("grub_cfg", cfg_ok, 3, "boot loader configuration was regenerated with the parameter", cfg_evidence)
 
 try:
     cmdline = open("/proc/cmdline").read().strip()

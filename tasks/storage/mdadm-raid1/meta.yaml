@@ -1,6 +1,6 @@
 schema_version: 1
 id: storage/mdadm-raid1
-version: 1.0.0
+version: 1.1.0
 domain: storage
 weight: 20
 estimated_minutes: 15

@@ -71,11 +71,16 @@ def config_text(path, seen):
             text += "\n" + config_text(sub, seen)
     return text
 
-text = config_text("/etc/nftables.conf", set())
-text = re.sub(r"#[^\n]*", "", text)
 subnet_pattern = re.compile(r"saddr\s+(?:\{[^}]*" + re.escape(subnet) + r"[^}]*\}|" + re.escape(subnet) + r")[^\n;]*\bdrop\b")
-match = subnet_pattern.search(text)
-c2 = criterion("rule_persistent", bool(match), 3, "persistent nftables configuration contains the drop rule", match.group(0) if match else "rule not found in /etc/nftables.conf or its includes")
+match = None
+persist_root = ""
+for root in ("/etc/nftables.conf", "/etc/sysconfig/nftables.conf"):
+    text = re.sub(r"#[^\n]*", "", config_text(root, set()))
+    found = subnet_pattern.search(text)
+    if found:
+        match, persist_root = found, root
+        break
+c2 = criterion("rule_persistent", bool(match), 3, "persistent nftables configuration contains the drop rule", f"{persist_root}: {match.group(0)}" if match else "rule not found in /etc/nftables.conf or /etc/sysconfig/nftables.conf (includes followed)")
 
 enabled = run("systemctl", "is-enabled", "nftables") or run("systemctl", "is-enabled", "nftables.service")
 c3 = criterion("service_enabled", enabled == "enabled", 3, "nftables service loads the ruleset at boot", enabled or "nftables service not found")

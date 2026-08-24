@@ -3,6 +3,6 @@
 Task: Set the MTU of the network interface `{{nic}}` to `{{mtu}}` bytes.
 
 - The interface `{{nic}}` must be up with the requested MTU active.
-- Configure it through netplan, using a new dedicated YAML file; do not overwrite or delete any existing netplan files.
+- Persist the setting in a new dedicated configuration file; do not overwrite or delete any existing network configuration files.
 - Do not modify the configuration of any other network interface, and do not change the system default route.
 - The configuration must persist across reboots.

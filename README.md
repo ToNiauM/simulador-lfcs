@@ -37,6 +37,8 @@ Simulador de provas práticas para a certificação **Linux Foundation Certified
 
 Enunciados em inglês no estilo da prova ("Task: …", imperativo, "must persist across reboots"). Cada pack varia por seed (nomes, tamanhos, portas, IPs de redes de documentação) e o checker aceita qualquer solução válida, não apenas a de referência. Regras de segurança do conteúdo: Storage só toca `/dev/vdb`; Networking nunca altera a NIC primária nem a rota default; nenhum script depende de Internet — ferramentas como `nginx`, `podman` e `mdadm` devem estar pré-instaladas na imagem do guest (ver `requires` no `meta.yaml` de cada pack).
 
+**Dual-family**: como no exame LFCS atual — em que não se escolhe a distro e o ambiente pode ser Debian-based ou RHEL-based — o banco funciona nas duas famílias (guests de referência: Ubuntu Server 24.04 e Rocky Linux 9). Os enunciados são neutros de ferramenta; os checkers verificam o estado ativo com comandos universais e aceitam o mecanismo de persistência de qualquer família (netplan/systemd-networkd ou keyfiles do NetworkManager; timesyncd ou chrony; `/etc/nftables.conf` ou `/etc/sysconfig/nftables.conf`; GRUB via update-grub ou grubby/BLS), e as soluções de referência detectam a família via `/etc/os-release`.
+
 ## Estrutura
 
 - `bin/`: validação, renderização e feedback LLM.
@@ -109,7 +111,7 @@ Distribuído sob a [Licença MIT](LICENSE). Você pode usar, modificar e redistr
 
 ## Resumo operacional
 
-Do primeiro ao último comando, um ciclo completo de questão. Precisa de: uma VM descartável Ubuntu com segundo disco `/dev/vdb`, acesso SSH como root, e os pacotes do `requires` do pack instalados.
+Do primeiro ao último comando, um ciclo completo de questão. Precisa de: uma VM descartável (Ubuntu 24.04 ou Rocky 9, como no exame) com segundo disco `/dev/vdb`, acesso SSH como root, e os pacotes do `requires` do pack instalados.
 
 ```bash
 # Clonar o repositório no host
