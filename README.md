@@ -106,3 +106,53 @@ Contribuições são bem-vindas. Valide o pack alterado e execute os testes ante
 ## Licença
 
 Distribuído sob a [Licença MIT](LICENSE). Você pode usar, modificar e redistribuir o projeto, inclusive comercialmente, preservando o aviso de copyright e licença.
+
+## Resumo operacional
+
+Do primeiro ao último comando, um ciclo completo de questão. Precisa de: uma VM descartável Ubuntu com segundo disco `/dev/vdb`, acesso SSH como root, e os pacotes do `requires` do pack instalados.
+
+```bash
+# Clonar o repositório no host
+git clone https://github.com/ToNiauM/simulador-lfcs.git
+# Entrar no diretório do projeto
+cd simulador-lfcs
+# Validar o pack escolhido
+./bin/validate-task-pack tasks/storage/lvm-persistent-mount
+# Gerar os parâmetros da tentativa (o seed define a variante)
+./bin/render-task tasks/storage/lvm-persistent-mount tentativa-01 /tmp/lfcs-task.json
+# Copiar o pack para a VM descartável
+scp -r tasks/storage/lvm-persistent-mount root@IP-DA-VM:/root/pack
+# Copiar os parâmetros para a VM
+scp /tmp/lfcs-task.json root@IP-DA-VM:/root/lfcs-task.json
+# Entrar na VM
+ssh root@IP-DA-VM
+# Habilitar o modo laboratório (na VM, como root)
+export LFCS_GUEST_LAB=1
+# Apontar a tarefa, o seed e os parâmetros
+export LFCS_TASK_ID=storage/lvm-persistent-mount LFCS_SEED=tentativa-01 LFCS_PARAMS_FILE=/root/lfcs-task.json
+# Preparar o cenário inicial da questão
+/root/pack/setup.sh
+# Ler o enunciado (substitua mentalmente os {{placeholders}} pelos valores do lfcs-task.json)
+cat /root/pack/instructions.md.tmpl /root/lfcs-task.json
+# >>> Resolver a tarefa você mesmo, como na prova <<<
+# Reiniciar para provar que a configuração persiste
+reboot
+# Entrar de novo na VM após o boot
+ssh root@IP-DA-VM
+# Reexportar as variáveis da tentativa
+export LFCS_GUEST_LAB=1 LFCS_TASK_ID=storage/lvm-persistent-mount LFCS_PARAMS_FILE=/root/lfcs-task.json
+# Corrigir pelo estado final e gravar a nota
+/root/pack/check.sh > /root/resultado.json
+# Ver a nota por critério
+cat /root/resultado.json
+# Sair da VM
+exit
+# Copiar o resultado de volta para o host
+scp root@IP-DA-VM:/root/resultado.json /tmp/resultado.json
+# (Opcional) Configurar o provedor LLM para feedback
+export LFCS_LLM_PROVIDER=anthropic LFCS_LLM_API_KEY='sua-chave'
+# (Opcional) Gerar feedback pedagógico do resultado
+./bin/llm-feedback /tmp/resultado.json tasks/storage/lvm-persistent-mount/instructions.md.tmpl claude-sonnet-5
+# Destruir a VM descartável (exemplo com libvirt)
+virsh destroy lfcs-vm ; virsh undefine lfcs-vm --remove-all-storage
+```
