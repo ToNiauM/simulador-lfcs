@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+"""Non-destructive structural validator for LFCS task packs."""
+import json
+import pathlib
+import subprocess
+import sys
+import tempfile
+
+import jsonschema
+import yaml
+
+if len(sys.argv) != 2:
+    raise SystemExit(f"usage: {sys.argv[0]} PACK_DIR")
+pack = pathlib.Path(sys.argv[1]).resolve()
+root = pathlib.Path(__file__).resolve().parent.parent
+required = ("meta.yaml", "setup.sh", "solve.sh", "check.sh", "instructions.md.tmpl", "generate_params.py", "tests/e2e-in-guest.sh")
+missing = [name for name in required if not (pack / name).is_file()]
+if missing:
+    raise SystemExit("missing files: " + ", ".join(missing))
+meta = yaml.safe_load((pack / "meta.yaml").read_text())
+schema = json.loads((root / "schemas/task-meta.schema.json").read_text())
+jsonschema.validate(meta, schema)
+for script in ("setup.sh", "solve.sh", "check.sh", "tests/e2e-in-guest.sh"):
+    subprocess.run(["bash", "-n", pack / script], check=True)
+with tempfile.NamedTemporaryFile() as target:
+    subprocess.run([root / "bin/render-task", pack, "validation-seed", target.name], check=True)
+    payload = json.loads(pathlib.Path(target.name).read_text())
+assert payload["task_id"] == meta["id"] and isinstance(payload["params"], dict) and payload["params"]
+print(f"valid: {meta['id']} ({meta['version']})")

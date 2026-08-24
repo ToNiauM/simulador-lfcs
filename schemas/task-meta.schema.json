@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LFCS task metadata v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "version", "domain", "weight", "estimated_minutes", "requires", "parameters"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:[a-z0-9-]*/)*[a-z0-9-]+$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "domain": {"enum": ["operations-deployment", "networking", "storage", "essential-commands", "users-groups"]},
+    "weight": {"type": "integer", "minimum": 1, "maximum": 100},
+    "estimated_minutes": {"type": "integer", "minimum": 1, "maximum": 120},
+    "requires": {"type": "array", "items": {"type": "string"}},
+    "parameters": {"type": "object"}
+  }
+}

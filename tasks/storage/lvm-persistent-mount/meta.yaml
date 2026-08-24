@@ -1,0 +1,13 @@
+schema_version: 1
+id: storage/lvm-persistent-mount
+version: 1.0.0
+domain: storage
+weight: 20
+estimated_minutes: 8
+requires:
+  - lvm2
+  - util-linux
+parameters:
+  target_disk: /dev/vdb
+  filesystem: ext4
+  lv_size_mib: [96, 128, 160]
